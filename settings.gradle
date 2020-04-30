@@ -1,0 +1,2 @@
+rootProject.name='HcyDeviceTest'
+include ':app'
