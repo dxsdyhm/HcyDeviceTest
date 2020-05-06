@@ -28,17 +28,12 @@ import android.net.wifi.WifiConfiguration.KeyMgmt;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
-import android.net.LinkProperties;
 import android.net.NetworkInfo;
-import android.net.EthernetManager;
-import android.net.IpConfiguration.IpAssignment;
-import android.net.IpConfiguration.ProxySettings;
 //import android.net.ethernet.EthernetManager;
 //import android.net.wifi.WifiConfiguration.IpAssignment;
 //import android.net.wifi.WifiConfiguration.ProxySettings;
 
-import com.hcy.deviceregist.RegistByServer;
+import com.hcy.devicetest.IndexActivity;
 import com.hcy.devicetest.R;
 import com.hcy.devicetest.constants.ParamConstants;
 import com.hcy.devicetest.model.TestCaseInfo;

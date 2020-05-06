@@ -23,6 +23,7 @@ import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
 
+import com.hcy.devicetest.IndexActivity;
 import com.hcy.devicetest.R;
 import com.hcy.devicetest.constants.ParamConstants;
 import com.hcy.devicetest.model.TestCaseInfo;
@@ -88,7 +89,6 @@ public class BluetoothTest extends BaseTestCase {
 			updateDetail(getString(R.string.bt_start_open));
 			mBluetoothHandler.sendEmptyMessage(MSG_OPEN_BT);
 		}
-		
 		setTestTimeout(BT_DISCOVERY_TIMEOUT_MS);
 		return true;
 	}

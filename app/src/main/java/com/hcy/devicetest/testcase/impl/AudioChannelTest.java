@@ -50,7 +50,7 @@ public class AudioChannelTest extends BaseTestCase {
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setTitle(R.string.audio_title);
 		//builder.setView(view);
-		builder.setSingleChoiceItems(R.array.test_audio, 0, new OnClickListener(){
+		builder.setSingleChoiceItems(R.array.test_audio, 2, new OnClickListener(){
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if(which==0){
@@ -69,6 +69,7 @@ public class AudioChannelTest extends BaseTestCase {
 		});
 		builder.setPositiveButton(mContext.getString(R.string.pub_success), new OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
+				Log.e("dxs","which:"+which);
 				onTestSuccess();
 			}
 		});
@@ -76,12 +77,14 @@ public class AudioChannelTest extends BaseTestCase {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				onTestFail(0);
+
 			}
 		});
 		builder.setCancelable(false);
 		AlertDialog dialog = builder.create();
 		dialog.show();
 		startPlay();
+		dialog.getButton(-1).requestFocusFromTouch();
 		return super.onTesting();
 	}
 	

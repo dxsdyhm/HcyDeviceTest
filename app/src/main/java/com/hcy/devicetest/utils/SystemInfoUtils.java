@@ -33,7 +33,8 @@ public class SystemInfoUtils {
     private static final String FILENAME_PROC_VERSION = "/proc/version";
     private static final String FILENAME_MEMINFO = "/proc/meminfo";
     private static final String FILENAME_MAC = "/sys/class/net/eth0/address";
-	
+    private static final String FILENAME_WIFI_MAC = "/sys/class/net/wlan0/address";
+
     
     /**
      * Reads a line from the specified file.
@@ -60,6 +61,18 @@ public class SystemInfoUtils {
        }catch(Exception e){
        }
        return mac;
+    }
+
+    /**
+     * 获取Mac地址
+     */
+    public static String getWifiMac(Context context){
+        String mac ="";
+        try {
+            mac =readLine(FILENAME_WIFI_MAC);
+        }catch(Exception e){
+        }
+        return mac;
     }
  
     /**

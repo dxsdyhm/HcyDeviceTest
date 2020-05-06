@@ -3,14 +3,12 @@ package com.hcy.devicetest;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
-import com.hcy.deviceregist.RegistByServer;
 import com.hcy.devicetest.adapter.TestCaseArrayAdapter;
 import com.hcy.devicetest.constants.ParamConstants;
 import com.hcy.devicetest.enumerate.Commands;
@@ -34,26 +32,18 @@ import com.hcy.devicetest.utils.SystemInfoUtils;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.StatFs;
-import android.os.SystemProperties;
-import android.os.SystemPropertiesProto;
 import android.os.storage.StorageManager;
-import android.os.storage.StorageVolume;
 import android.os.storage.StorageEventListener;
-import android.text.format.Formatter;
 import android.util.Log;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 public class IndexActivity extends BaseActivity implements ListViewLoadListener {
@@ -70,7 +60,8 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 	private boolean isRunningTask;
 	private int mSeletedTestIndex;
 	private StorageManager mStorageManager = null;
-	
+	public static String BlueMac="";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -175,6 +166,7 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 			Commands cmd = testInfo.getCmd();
 			try{
 				String testclass = mTestHandlerConfig.get(cmd.getCommand().trim());
+				Log.e("dxs","testclass:"+testclass);
 				if(StringUtils.isEmptyObj(testclass)){
 					LogUtil.e(this, cmd.getCommand()+" 's Handler isn't exist. ");
 					return;
@@ -202,13 +194,7 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 	 */
 	IHandlerCallback mHandlerCallback = new IHandlerCallback(){
 		public void onMessageHandled(BaseTestCase testcase, TestResult result) {
-			if(testcase.getTestCaseInfo().getDetail().contains("wifi")&&result.isSuccessed()){
-
-				Log.e("dxs","RegistByServer");
-			}
-			RegistByServer.HttpTest(IndexActivity.this);
 			//SystemProperties.set("ro.serialno","HCY1234567");
-			Log.e("dxs",testcase.getTestCaseInfo().getDetail()+"  result:"+result.isSuccessed());
 			if(mSeletedTestIndex>=mTestCaseList.size()-1){//测试结束
 				boolean ret = true;
 				for(TestCaseInfo testInfo : mTestCaseList){
