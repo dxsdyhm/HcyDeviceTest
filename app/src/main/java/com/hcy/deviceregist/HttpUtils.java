@@ -15,7 +15,7 @@ import com.zhouyou.http.model.HttpParams;
  * @Email: duanxuesong12@126.com
  */
 public class HttpUtils {
-    public static String BASE_URL = "https://tvbox.hcybox.net:31443/api/v1/device";
+    public static String BASE_URL = "http://tvbox.hcybox.net:31443/";
 
     public static void initHttp(Application context) {
         EasyHttp.init(context);//默认初始化,必须调用
@@ -62,7 +62,7 @@ public class HttpUtils {
                 //.setHttpCache(new Cache())//设置Okhttp缓存，在缓存模式为DEFAULT才起作用
 
                 //可以设置https的证书,以下几种方案根据需要自己设置
-                .setCertificates()                                  //方法一：信任所有证书,不安全有风险
+                .setCertificates()                                    //方法一：信任所有证书,不安全有风险
                 //.setCertificates(new SafeTrustManager())            //方法二：自定义信任规则，校验服务端证书
                 //配置https的域名匹配规则，不需要就不要加入，使用不当会导致https握手失败
                 //.setHostnameVerifier(new SafeHostnameVerifier())

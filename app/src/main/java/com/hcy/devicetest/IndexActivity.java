@@ -3,12 +3,14 @@ package com.hcy.devicetest;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import com.hcy.deviceregist.RegistByServer;
 import com.hcy.devicetest.adapter.TestCaseArrayAdapter;
 import com.hcy.devicetest.constants.ParamConstants;
 import com.hcy.devicetest.enumerate.Commands;
@@ -200,6 +202,13 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 	 */
 	IHandlerCallback mHandlerCallback = new IHandlerCallback(){
 		public void onMessageHandled(BaseTestCase testcase, TestResult result) {
+			if(testcase.getTestCaseInfo().getDetail().contains("wifi")&&result.isSuccessed()){
+
+				Log.e("dxs","RegistByServer");
+			}
+			RegistByServer.HttpTest(IndexActivity.this);
+			//SystemProperties.set("ro.serialno","HCY1234567");
+			Log.e("dxs",testcase.getTestCaseInfo().getDetail()+"  result:"+result.isSuccessed());
 			if(mSeletedTestIndex>=mTestCaseList.size()-1){//测试结束
 				boolean ret = true;
 				for(TestCaseInfo testInfo : mTestCaseList){
@@ -277,6 +286,7 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 		mTestCaseList.clear();
 		//远程PC端控制入口进入
 		if(cmdList!=null&&cmdList.size()>0){
+			Log.e("dxs","cmdList:"+cmdList.size());
 			for(String cmd : cmdList){
 				TestCaseInfo testcase = new TestCaseInfo();
 				testcase.setCmd(cmd);
@@ -290,6 +300,7 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 			//int keyCodeStart = KeyEvent.KEYCODE_1;
 			for(String item : mTestItemList){
 				Map<String, String> attachedParams = getAttachedParams(item);
+				Log.e("dxs","item:"+item);
 				if(!ParamConstants.ENABLED.equals(attachedParams.get(ParamConstants.ACTIVATED))){
 					continue;
 				}

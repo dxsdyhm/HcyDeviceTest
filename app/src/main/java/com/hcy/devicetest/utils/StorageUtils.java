@@ -124,8 +124,9 @@ public class StorageUtils {
                 DiskInfo disk = vol.getDisk();
                 if (disk != null) {
                     if (disk.isUsb()) {
-                    	//usbPaths.add(vol.path);
-                    	usbPaths.add(vol.internalPath);
+                        // TODO: 2020/5/6 本地测试使用path,正式环境改为internalPath
+                    	usbPaths.add(vol.path);
+                    	//usbPaths.add(vol.internalPath);
                     }
                 }
             }

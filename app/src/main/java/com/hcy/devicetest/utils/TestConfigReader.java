@@ -27,7 +27,7 @@ public class TestConfigReader {
 		IniEditor configLoader = new IniEditor();
 		byte[] fdata = FileUtils.readFileContent(file);
 		if(fdata==null||fdata.length<MIN_FILE_SIZE){
-			LogUtil.e(this, "Read config error. ");
+			LogUtil.e(this, "Read config error. "+fdata);
 			return configLoader;
 		}
 		//check header

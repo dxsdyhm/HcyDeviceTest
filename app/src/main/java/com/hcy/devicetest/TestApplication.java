@@ -12,6 +12,7 @@
 
 package com.hcy.devicetest;
 
+import com.hcy.deviceregist.HttpUtils;
 import com.hcy.devicetest.service.TestService;
 
 import android.app.ActivityManager;
@@ -29,6 +30,7 @@ public class TestApplication extends Application {
 	public void onCreate() {
 		mActivityManager= (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 		super.onCreate();
+		HttpUtils.initHttp(this);
 	}
 	
 	public boolean isDispatcherReady(){

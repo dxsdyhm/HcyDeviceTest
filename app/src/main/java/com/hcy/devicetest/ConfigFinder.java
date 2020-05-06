@@ -46,8 +46,9 @@ public class ConfigFinder {
 		List<String> usbList = getAliveUsbPath(mContext);
 		for(String usb : usbList){
 			existedFile = new File(usb, file);
+			Log.d("dxs","usb file:"+usb+"  file:"+file+" existedFile.exists():"+existedFile.exists());
 			if(existedFile.exists()){
-                                Log.d("hjc","usb file:"+existedFile);
+				Log.d("hjc","usb file:"+existedFile);
 				return existedFile;
 			}
 		}

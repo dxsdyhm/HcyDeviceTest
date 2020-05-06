@@ -1,8 +1,10 @@
 package com.hcy.deviceregist;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.hcy.deviceregist.Entry.DeviceRegist;
+import com.hcy.devicetest.utils.SystemInfoUtils;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
@@ -21,12 +23,13 @@ public class RegistByServer {
     "licenseCode":"E2BC1418F1394b1396A546CE9483AB4ECC84DCF549C843dcBCAE6B456E9B52A7"
     }
      */
-    public static void HttpTest() {
-        EasyHttp.post("/active")
-                .params("wifiMacAddr","")
-                .params("macAddr","")
-                .params("bluetoothAddr","")
-                .params("licenseCode","")
+    public static void HttpTest(Context context) {
+        Log.e("dxsTest","HttpTest:");
+        EasyHttp.post("api/v1/device/active")
+                .params("wifiMacAddr",SystemInfoUtils.getMac(context))
+                .params("macAddr", SystemInfoUtils.getMac(context))
+                .params("bluetoothAddr",SystemInfoUtils.getMac(context))
+                .params("licenseCode","E2BC1418F1394b1396A546CE9483AB4ECC84DCF549C843dcBCAE6B456E9B52A7")
                 .execute(new SimpleCallBack<DeviceRegist>() {
                     @Override
                     public void onError(ApiException e) {

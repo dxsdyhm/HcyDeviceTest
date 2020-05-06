@@ -38,6 +38,7 @@ import android.net.IpConfiguration.ProxySettings;
 //import android.net.wifi.WifiConfiguration.IpAssignment;
 //import android.net.wifi.WifiConfiguration.ProxySettings;
 
+import com.hcy.deviceregist.RegistByServer;
 import com.hcy.devicetest.R;
 import com.hcy.devicetest.constants.ParamConstants;
 import com.hcy.devicetest.model.TestCaseInfo;
@@ -307,8 +308,10 @@ public class WifiTest extends BaseTestCase {
 								}
 							};
 							mWifiHandler.postDelayed(checkLevelAction, WIFI_LEVEL_TIMEOUT);
+							mWifiManager.forget(wifiInfo.getNetworkId(), null);
 						}
-						mWifiManager.forget(wifiInfo.getNetworkId(), null);
+						// TODO: 2020/4/30 wifi链接后需要进行激活请求，暂时不断开链接
+						//mWifiManager.forget(wifiInfo.getNetworkId(), null);
 						LogUtil.d(this, "Current wifi ap NetID: "+wifiInfo.getNetworkId()+", level: "+level+", startLevel: "+mStartSignalLevel+", endLevel: "+mEndSignalLevel);
 					}
 					isConnecting = false;
