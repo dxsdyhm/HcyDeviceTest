@@ -31,7 +31,8 @@ public class TypeConstants {
 	public static final String CMD_CKSN = "CKSN";//验号?
 	public static final String CMD_MIC = "MIC";//麦克风
 	public static final String CMD_BT = "BT";//蓝牙
-	
+	public static final String CMD_INTERNET = "INTERNET";//联网（实际是激活）
+
 	//CommandType
 	public static final int TYPE_CMD = 0;
 	public static final int TYPE_ACK = 1;

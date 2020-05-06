@@ -33,8 +33,9 @@ public enum Commands {
 	//CMD_RDSN(TypeConstants.CMD_RDSN, 0),
 	CMD_CKSN(TypeConstants.CMD_CKSN, 0/*R.string.cmd_cksn*/),
 	CMD_TEST(TypeConstants.CMD_TEST, 0),
+	CMD_INTERNET(TypeConstants.CMD_INTERNET, R.string.cmd_internet),
 	CMD_BEAT(TypeConstants.CMD_BEAT, 0);
-	
+
 	private String command;
 	private int resID;
 	
