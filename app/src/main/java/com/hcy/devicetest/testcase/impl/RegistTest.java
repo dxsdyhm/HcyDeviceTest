@@ -2,25 +2,23 @@ package com.hcy.devicetest.testcase.impl;
 
 import android.content.Context;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.blankj.utilcode.util.FileIOUtils;
 import com.blankj.utilcode.util.GsonUtils;
-import com.blankj.utilcode.util.NetworkUtils;
-import com.google.gson.Gson;
-import com.hcy.deviceregist.Entry.BaseEntry;
 import com.hcy.deviceregist.Entry.DeviceRegist;
 import com.hcy.deviceregist.Entry.SendInfo;
+import com.hcy.devicetest.ConfigFinder;
 import com.hcy.devicetest.IndexActivity;
 import com.hcy.devicetest.model.TestCaseInfo;
+import com.hcy.devicetest.service.TestService;
 import com.hcy.devicetest.testcase.BaseTestCase;
 import com.hcy.devicetest.utils.SystemInfoUtils;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
-import com.zhouyou.http.func.ApiResultFunc;
-import com.zhouyou.http.model.ApiResult;
 
-import java.net.NetworkInterface;
 
 /**
  * @Author: dxs
@@ -39,16 +37,16 @@ public class RegistTest extends BaseTestCase {
     @Override
     public void onTestInit() {
         //config
-        sendInfo=new SendInfo();
-        sendInfo.setWifiMacAddr(SystemInfoUtils.getWifiMac(mContext));
-        sendInfo.setMacAddr(SystemInfoUtils.getMac(mContext));
-        sendInfo.setBluetoothAddr(IndexActivity.BlueMac);
-        sendInfo.setLicenseCode("E2BC1418F1394b1396A546CE9483AB4ECC84DCF549C843dcBCAE6B456E9B52A7");
-        Log.e("dxs","sendinfo:"+sendInfo);
+        init();
     }
 
     @Override
     public boolean onTesting() {
+        Log.e("dxs","licencecode:"+sendInfo.getLicenseCode());
+        if(TextUtils.isEmpty(sendInfo.getLicenseCode())){
+            onTestFail("未发现授权码");
+            return false;
+        }
         EasyHttp.post("api/v1/device/active")
                 .upJson(GsonUtils.toJson(sendInfo))
                 .execute(new SimpleCallBack<DeviceRegist>() {
@@ -63,5 +61,19 @@ public class RegistTest extends BaseTestCase {
                     }
                 });
         return super.onTesting();
+    }
+
+    private void init(){
+        sendInfo=new SendInfo();
+        sendInfo.setWifiMacAddr(SystemInfoUtils.getWifiMac(mContext));
+        sendInfo.setMacAddr(SystemInfoUtils.getMac(mContext));
+        sendInfo.setBluetoothAddr(IndexActivity.BlueMac);
+        String licencecode= null;
+        try {
+            licencecode = FileIOUtils.readFile2String(ConfigFinder.findConfigFile(TestService.FILE_LICENCE,mContext));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        sendInfo.setLicenseCode(licencecode);
     }
 }

@@ -49,6 +49,7 @@ public class TestService extends Service {
 	public static final String FILE_FACTORY_TEST = "Factory_Test_Hcy.bin";
 	public static final String FILE_AGING_TEST = "Aging_Test_Hcy.bin";
 	public static final String FILE_SN_TEST = "SN_Test_Hcy.bin";
+	public static final String FILE_LICENCE = "License.bin";
 	private TestApplication mApp;
 	private boolean isStartingActivity;
 	private boolean hasStartedActivity;

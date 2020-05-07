@@ -166,7 +166,6 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 			Commands cmd = testInfo.getCmd();
 			try{
 				String testclass = mTestHandlerConfig.get(cmd.getCommand().trim());
-				Log.e("dxs","testclass:"+testclass);
 				if(StringUtils.isEmptyObj(testclass)){
 					LogUtil.e(this, cmd.getCommand()+" 's Handler isn't exist. ");
 					return;

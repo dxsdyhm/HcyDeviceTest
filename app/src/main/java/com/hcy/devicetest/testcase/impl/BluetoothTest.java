@@ -12,6 +12,9 @@
 
 package com.hcy.devicetest.testcase.impl;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 import android.bluetooth.BluetoothAdapter;
@@ -22,6 +25,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.hcy.devicetest.IndexActivity;
 import com.hcy.devicetest.R;
@@ -62,7 +66,7 @@ public class BluetoothTest extends BaseTestCase {
 			onTestFail(R.string.bt_err_noexist);
 			return false;
 		}
-		
+		getBlueMac();
 		//Get specified bluetooth name
 		if(mTestCaseInfo!=null){
 			Map<String, String> attachParams = mTestCaseInfo.getAttachParams();
@@ -132,6 +136,28 @@ public class BluetoothTest extends BaseTestCase {
 			mBluetoothHandler.removeMessages(MSG_OPEN_BT);
 		if(!mBluetoothAdapter.startDiscovery()){
 			onTestFail(R.string.bt_err_discovery);
+		}
+	}
+
+	private void getBlueMac(){
+		try {
+			Field field=mBluetoothAdapter.getClass().getDeclaredField("mService");
+			field.setAccessible(true);
+			Object bluetoothManagerService=field.get(mBluetoothAdapter);
+			Method method=bluetoothManagerService.getClass().getMethod("getAddress");
+			Object address=method.invoke(bluetoothManagerService);
+			if(address!=null && address instanceof String){
+				Log.e("dxs","mac address:"+address);
+				IndexActivity.BlueMac= (String) address;
+			}
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
 		}
 	}
 
