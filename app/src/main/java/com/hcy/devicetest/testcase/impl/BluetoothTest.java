@@ -147,7 +147,6 @@ public class BluetoothTest extends BaseTestCase {
 			Method method=bluetoothManagerService.getClass().getMethod("getAddress");
 			Object address=method.invoke(bluetoothManagerService);
 			if(address!=null && address instanceof String){
-				Log.e("dxs","mac address:"+address);
 				IndexActivity.BlueMac= (String) address;
 			}
 		} catch (NoSuchFieldException e) {

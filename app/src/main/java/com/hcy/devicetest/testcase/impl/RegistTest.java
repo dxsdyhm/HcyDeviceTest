@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.blankj.utilcode.util.FileIOUtils;
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.NetworkUtils;
 import com.hcy.deviceregist.Entry.DeviceRegist;
 import com.hcy.deviceregist.Entry.SendInfo;
 import com.hcy.devicetest.ConfigFinder;
@@ -42,7 +43,6 @@ public class RegistTest extends BaseTestCase {
 
     @Override
     public boolean onTesting() {
-        Log.e("dxs","licencecode:"+sendInfo.getLicenseCode());
         if(TextUtils.isEmpty(sendInfo.getLicenseCode())){
             onTestFail("未发现授权码");
             return false;

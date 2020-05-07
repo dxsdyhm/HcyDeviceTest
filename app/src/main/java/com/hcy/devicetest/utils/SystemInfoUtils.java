@@ -15,7 +15,6 @@ package com.hcy.devicetest.utils;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,10 +22,8 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.os.Environment;
 import android.os.StatFs;
 import android.text.format.Formatter;
-import android.util.Log;
 
 public class SystemInfoUtils {
 
@@ -35,7 +32,6 @@ public class SystemInfoUtils {
     private static final String FILENAME_MAC = "/sys/class/net/eth0/address";
     private static final String FILENAME_WIFI_MAC = "/sys/class/net/wlan0/address";
 
-    
     /**
      * Reads a line from the specified file.
      * @param filename the file to read from

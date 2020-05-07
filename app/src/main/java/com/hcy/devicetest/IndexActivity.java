@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import com.blankj.utilcode.util.NetworkUtils;
 import com.hcy.devicetest.adapter.TestCaseArrayAdapter;
 import com.hcy.devicetest.constants.ParamConstants;
 import com.hcy.devicetest.enumerate.Commands;
@@ -32,6 +33,8 @@ import com.hcy.devicetest.utils.SystemInfoUtils;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -211,6 +214,7 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 						LogUtil.e(this, "Failed to create ftest_pass.bin");
 					}
 				}
+				fogetWifi();
 				saveFactoryTest(ret);
 				LogUtil.d(this, "Test Finished. Result: "+ret);
 			}else{
@@ -221,6 +225,17 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 			}
 		}
 	};
+
+	/**
+	 * 如果当前已连接wifi，则忘记
+	 */
+	public void fogetWifi(){
+		if(NetworkUtils.isWifiConnected()){
+			WifiManager mWifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+			WifiInfo info=mWifiManager.getConnectionInfo();
+			mWifiManager.forget(info.getNetworkId(), null);
+		}
+	}
 	
 	/**
 	 * 保存功能测试结果
@@ -271,7 +286,6 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 		mTestCaseList.clear();
 		//远程PC端控制入口进入
 		if(cmdList!=null&&cmdList.size()>0){
-			Log.e("dxs","cmdList:"+cmdList.size());
 			for(String cmd : cmdList){
 				TestCaseInfo testcase = new TestCaseInfo();
 				testcase.setCmd(cmd);
@@ -285,7 +299,6 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 			//int keyCodeStart = KeyEvent.KEYCODE_1;
 			for(String item : mTestItemList){
 				Map<String, String> attachedParams = getAttachedParams(item);
-				Log.e("dxs","item:"+item);
 				if(!ParamConstants.ENABLED.equals(attachedParams.get(ParamConstants.ACTIVATED))){
 					continue;
 				}

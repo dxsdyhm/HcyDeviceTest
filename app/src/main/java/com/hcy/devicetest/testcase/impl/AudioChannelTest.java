@@ -69,7 +69,6 @@ public class AudioChannelTest extends BaseTestCase {
 		});
 		builder.setPositiveButton(mContext.getString(R.string.pub_success), new OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-				Log.e("dxs","which:"+which);
 				onTestSuccess();
 			}
 		});
