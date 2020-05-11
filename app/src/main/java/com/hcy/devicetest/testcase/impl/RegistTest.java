@@ -57,7 +57,7 @@ public class RegistTest extends BaseTestCase {
 
                     @Override
                     public void onSuccess(DeviceRegist deviceRegist) {
-                        onTestSuccess("成功:"+deviceRegist.getSerialNO()+"剩余："+deviceRegist.getSurplus());
+                        onTestSuccess("成功:"+deviceRegist.getSerialNO()+" 剩余："+deviceRegist.getSurplus());
                     }
                 });
         return super.onTesting();

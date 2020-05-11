@@ -73,6 +73,7 @@ public class WifiTest extends BaseTestCase {
 	@Override
 	public void onTestInit() {
 		super.onTestInit();
+		ShellUtils.execCmd("ifconfig eth0 down",true);
 	}
 
 	@Override
@@ -134,6 +135,7 @@ public class WifiTest extends BaseTestCase {
 	
 	@Override
 	public boolean onTestHandled(TestResult result) {
+		ShellUtils.execCmd("ifconfig eth0 up",true);
 		if(hasRegisterReceiver){
 			mContext.unregisterReceiver(mReceiver);
 			hasRegisterReceiver = false;
