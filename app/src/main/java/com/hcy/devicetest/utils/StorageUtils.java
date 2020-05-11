@@ -125,8 +125,8 @@ public class StorageUtils {
                 if (disk != null) {
                     if (disk.isUsb()) {
                         // TODO: 2020/5/6 本地测试使用path,正式环境改为internalPath
-                    	usbPaths.add(vol.path);
-                    	//usbPaths.add(vol.internalPath);
+                    	//usbPaths.add(vol.path);
+                    	usbPaths.add(vol.internalPath);
                     }
                 }
             }

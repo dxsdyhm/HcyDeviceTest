@@ -57,7 +57,7 @@ public class RegistTest extends BaseTestCase {
 
                     @Override
                     public void onSuccess(DeviceRegist deviceRegist) {
-                        onTestSuccess("成功:"+deviceRegist.getSerialNO());
+                        onTestSuccess("成功:"+deviceRegist.getSerialNO()+"剩余："+deviceRegist.getSurplus());
                     }
                 });
         return super.onTesting();
@@ -68,6 +68,7 @@ public class RegistTest extends BaseTestCase {
         sendInfo.setWifiMacAddr(SystemInfoUtils.getWifiMac(mContext));
         sendInfo.setMacAddr(SystemInfoUtils.getMac(mContext));
         sendInfo.setBluetoothAddr(IndexActivity.BlueMac);
+        sendInfo.setCpuserial(SystemInfoUtils.getCpuSerial());
         String licencecode= null;
         try {
             licencecode = FileIOUtils.readFile2String(ConfigFinder.findConfigFile(TestService.FILE_LICENCE,mContext));

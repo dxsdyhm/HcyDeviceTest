@@ -15,6 +15,8 @@ package com.hcy.devicetest.utils;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -176,5 +178,36 @@ public class SystemInfoUtils {
         return m.group(1) + "  " +                 // 3.0.31-g6fb96c9
             m.group(2) + " " + m.group(3) + "  " + // x@y.com #1
             m.group(4);                            // Thu Jun 28 11:02:39 PDT 2012
+    }
+
+    public static String getCpuSerial(){
+        String cpuinfo="";
+        try {
+            //读取CPU信息
+            Process pp = Runtime.getRuntime().exec("cat /proc/cpuinfo");
+            InputStreamReader ir = new InputStreamReader(pp.getInputStream());
+            LineNumberReader input = new LineNumberReader(ir);
+            //查找CPU序列号
+            for (int i = 1; i < 100; i++) {
+                String str = input.readLine();
+                if (str != null) {
+                    //查找到序列号所在行
+                    if (str.contains("Serial")) {
+                        //提取序列号
+                        cpuinfo = str.substring(str.indexOf(":") + 1,str.length());
+                        //去空格
+                        cpuinfo = cpuinfo.trim();
+                        break;
+                    }
+                } else {
+                    //文件结尾
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            //赋予默认值
+            ex.printStackTrace();
+        }
+        return cpuinfo;
     }
 }

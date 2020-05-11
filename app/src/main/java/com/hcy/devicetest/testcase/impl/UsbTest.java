@@ -23,6 +23,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 
 import com.hcy.devicetest.ConfigFinder;
 import com.hcy.devicetest.R;
@@ -126,6 +127,7 @@ public class UsbTest extends BaseTestCase {
         File directory = new File(directoryName);
         if (!directory.isDirectory()) { // Create Test Dir
             if (!directory.mkdirs()) {
+				Log.e("dxs","directoryName:"+directoryName);
             	onTestFail(R.string.sd_err_mkdir, usbIndex);
                 return false;
             }

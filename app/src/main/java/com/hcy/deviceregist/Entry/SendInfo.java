@@ -9,12 +9,14 @@ public class SendInfo {
     private String wifiMacAddr="";
     private String macAddr="";
     private String bluetoothAddr="";
+    private String cpuserial="";
     private String licenseCode="";
 
-    public SendInfo(String wifiMacAddr, String macAddr, String bluetoothAddr, String licenseCode) {
+    public SendInfo(String wifiMacAddr, String macAddr, String bluetoothAddr, String cpuserial, String licenseCode) {
         this.wifiMacAddr = wifiMacAddr;
         this.macAddr = macAddr;
         this.bluetoothAddr = bluetoothAddr;
+        this.cpuserial = cpuserial;
         this.licenseCode = licenseCode;
     }
 
@@ -53,12 +55,21 @@ public class SendInfo {
         this.licenseCode = licenseCode;
     }
 
+    public String getCpuserial() {
+        return cpuserial;
+    }
+
+    public void setCpuserial(String cpuserial) {
+        this.cpuserial = cpuserial;
+    }
+
     @Override
     public String toString() {
         return "SendInfo{" +
                 "wifiMacAddr='" + wifiMacAddr + '\'' +
                 ", macAddr='" + macAddr + '\'' +
                 ", bluetoothAddr='" + bluetoothAddr + '\'' +
+                ", cpuserial='" + cpuserial + '\'' +
                 ", licenseCode='" + licenseCode + '\'' +
                 '}';
     }

@@ -33,6 +33,7 @@ import android.net.NetworkInfo;
 //import android.net.wifi.WifiConfiguration.IpAssignment;
 //import android.net.wifi.WifiConfiguration.ProxySettings;
 
+import com.blankj.utilcode.util.ShellUtils;
 import com.hcy.devicetest.IndexActivity;
 import com.hcy.devicetest.R;
 import com.hcy.devicetest.constants.ParamConstants;
@@ -408,5 +409,4 @@ public class WifiTest extends BaseTestCase {
         }
         return SECURITY_NONE;
     }
-	
 }
