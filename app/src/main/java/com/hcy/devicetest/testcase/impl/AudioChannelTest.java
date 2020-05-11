@@ -36,7 +36,7 @@ public class AudioChannelTest extends BaseTestCase {
 	private MediaPlayer mPlayer;
 	private AudioManager mAudioManager;
 	private boolean leftEnable = true;//左声道
-	private boolean rightEnable = false;//右声道
+	private boolean rightEnable = true;//右声道
 	private int mOldVolume;
 	private boolean mSpeakerOn;
 	
@@ -63,6 +63,7 @@ public class AudioChannelTest extends BaseTestCase {
 					leftEnable = true;
 					rightEnable = true;
 				}
+				Log.e("dxs","leftEnable:"+leftEnable+" rightEnable:"+rightEnable+" which:"+which);
 				if(mPlayer!=null)
 					mPlayer.setVolume(leftEnable ? 1 : 0, rightEnable ? 1 : 0);
 			}
@@ -82,6 +83,7 @@ public class AudioChannelTest extends BaseTestCase {
 		builder.setCancelable(false);
 		AlertDialog dialog = builder.create();
 		dialog.show();
+		Log.e("dxs","leftEnable:"+leftEnable+" rightEnable:"+rightEnable);
 		startPlay();
 		dialog.getButton(-1).requestFocusFromTouch();
 		return super.onTesting();
@@ -135,7 +137,8 @@ public class AudioChannelTest extends BaseTestCase {
 			//mPlayer.setDataSource(fd.getFileDescriptor(), fd.getStartOffset(),
 			//		fd.getDeclaredLength());
                      //case rockit not ready for fd.
-                        mPlayer.setDataSource(mContext,Uri.parse("data/media/0/"+AUDIO_FILE),null);
+			//mPlayer.setDataSource(mContext,Uri.parse("data/media/0/"+AUDIO_FILE),null);
+			mPlayer.setDataSource(fd.getFileDescriptor());
 			mPlayer.prepare();
 			mPlayer.setLooping(true);
 		} catch (IllegalArgumentException e) {
