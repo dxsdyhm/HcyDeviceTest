@@ -206,7 +206,7 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 					}
 				}
 				if(ret){//测试成功
-					mResultText.setVisibility(View.VISIBLE);
+					//mResultText.setVisibility(View.VISIBLE);
 					try{//此文件用于烧写、写号工具判断是否已经过功能测试
 						File passFile = new File(Environment.getExternalStorageDirectory(), "ftest_pass.bin");
 						passFile.createNewFile();
@@ -214,7 +214,7 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 						LogUtil.e(this, "Failed to create ftest_pass.bin");
 					}
 				}
-				fogetWifi();
+				fogetWifi(IndexActivity.this);
 				saveFactoryTest(ret);
 				LogUtil.d(this, "Test Finished. Result: "+ret);
 			}else{
@@ -229,9 +229,9 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 	/**
 	 * 如果当前已连接wifi，则忘记
 	 */
-	public void fogetWifi(){
+	public static void fogetWifi(Context context){
 		if(NetworkUtils.isWifiConnected()){
-			WifiManager mWifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+			WifiManager mWifiManager = (WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 			WifiInfo info=mWifiManager.getConnectionInfo();
 			mWifiManager.forget(info.getNetworkId(), null);
 		}

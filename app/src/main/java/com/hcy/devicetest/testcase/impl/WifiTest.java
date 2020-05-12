@@ -29,6 +29,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.net.NetworkInfo;
+import android.text.TextUtils;
+import android.util.Log;
 //import android.net.ethernet.EthernetManager;
 //import android.net.wifi.WifiConfiguration.IpAssignment;
 //import android.net.wifi.WifiConfiguration.ProxySettings;
@@ -42,6 +44,7 @@ import com.hcy.devicetest.model.TestResult;
 import com.hcy.devicetest.testcase.BaseTestCase;
 import com.hcy.devicetest.utils.LogUtil;
 import com.hcy.devicetest.utils.StringUtils;
+import com.hcy.devicetest.utils.SystemInfoUtils;
 
 public class WifiTest extends BaseTestCase {
 	
@@ -69,12 +72,6 @@ public class WifiTest extends BaseTestCase {
 		mWifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
 		mWifiHandler = new WifiHandler(handler.getLooper());
 	}
-	
-	@Override
-	public void onTestInit() {
-		super.onTestInit();
-		//ShellUtils.execCmd("ifconfig eth0 down",true);
-	}
 
 	@Override
 	public boolean onTesting() {
@@ -98,6 +95,11 @@ public class WifiTest extends BaseTestCase {
 		
 		//Check connect wifi ap
 		needConnectAp = "1".equals(attachParams.get(ParamConstants.WIFI_CONNECT));
+
+		if(needConnectAp){
+			ShellUtils.CommandResult result=ShellUtils.execCmd("ifconfig eth0 down",true);
+			Log.e("dxs",result.toString());
+		}
 		
 		//Check command parameter
 		mStartSignalLevel = StringUtils.parseInt(attachParams.get(ParamConstants.WIFI_DB_START), 999);
@@ -135,7 +137,9 @@ public class WifiTest extends BaseTestCase {
 	
 	@Override
 	public boolean onTestHandled(TestResult result) {
-		//ShellUtils.execCmd("ifconfig eth0 up",true);
+		if(needConnectAp){
+			ShellUtils.execCmd("ifconfig eth0 up",true);
+		}
 		if(hasRegisterReceiver){
 			mContext.unregisterReceiver(mReceiver);
 			hasRegisterReceiver = false;
@@ -231,7 +235,7 @@ public class WifiTest extends BaseTestCase {
 				if(!needConnectAp){//不需要连接AP测试
 	            	int level = scanResult.level;
 	            	if(level<=mStartSignalLevel&&level>=mEndSignalLevel){
-						onTestSuccess("Wifi: "+mSpecifiedAp+", dBm: "+level);
+						onTestSuccess(getSuccessInfo(null,level));
 					}else if(!isCheckingLevel){//信号不符合，延迟三秒再次检测
 						isCheckingLevel = true;
 						setTestTimeout(WIFI_LEVEL_TIMEOUT+1000);
@@ -242,7 +246,7 @@ public class WifiTest extends BaseTestCase {
 								if(scanResult==null) return;
 				            	int slevel = scanResult.level;
 				            	if(slevel<=mStartSignalLevel&&slevel>=mEndSignalLevel){
-									onTestSuccess("Wifi: "+mSpecifiedAp+", dBm: "+slevel);
+									onTestSuccess(getSuccessInfo(null,slevel));
 				            	}else{
 									String errMsg = mContext.getString(R.string.wifi_err_signal_outrange, slevel);
 									onTestFail(errMsg);
@@ -289,7 +293,7 @@ public class WifiTest extends BaseTestCase {
 			            }
 			            
 						if(level<=mStartSignalLevel&&level>=mEndSignalLevel){
-							onTestSuccess("Wifi: "+mSpecifiedAp+","+ipBuf+", dBm: "+level);
+							onTestSuccess(getSuccessInfo(ipBuf,level));
 						}else{//信号不符合，延迟三秒再次检测
 							setTestTimeout(WIFI_LEVEL_TIMEOUT+1000);
 							Runnable checkLevelAction = new Runnable() {
@@ -298,7 +302,7 @@ public class WifiTest extends BaseTestCase {
 									ScanResult scanResult = getScanResultWithSpecifiedAp(mSpecifiedAp);
 					            	int slevel = scanResult.level;
 					            	if(slevel<=mStartSignalLevel&&slevel>=mEndSignalLevel){
-										onTestSuccess("Wifi: "+mSpecifiedAp+","+ipBuf+", dBm: "+slevel);
+										onTestSuccess(getSuccessInfo(ipBuf,slevel));
 					            	}else{
 										String errMsg = mContext.getString(R.string.wifi_err_signal_outrange, slevel);
 										onTestFail(errMsg);
@@ -396,6 +400,13 @@ public class WifiTest extends BaseTestCase {
        */
         return config;
     }
+
+    private String getSuccessInfo(StringBuffer ipBuf,int level){
+		if(TextUtils.isEmpty(ipBuf)){
+			return "Wifi: "+mSpecifiedAp+", dBm: "+level+"\n"+ SystemInfoUtils.getWifiMac(mContext);
+		}
+		return "Wifi: "+mSpecifiedAp+","+ipBuf+", dBm: "+level+"\n"+ SystemInfoUtils.getWifiMac(mContext);
+	}
 
 	static String convertToQuotedString(String string) {
 	    return "\"" + string + "\"";

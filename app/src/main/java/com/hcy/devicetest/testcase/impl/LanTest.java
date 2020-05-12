@@ -26,11 +26,16 @@ import android.net.IpConfiguration.ProxySettings;
 import android.os.Handler;
 import android.os.SystemProperties;
 
+import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.ShellUtils;
+import com.hcy.devicetest.IndexActivity;
 import com.hcy.devicetest.R;
 import com.hcy.devicetest.model.TestCaseInfo;
 import com.hcy.devicetest.model.TestResult;
 import com.hcy.devicetest.testcase.BaseTestCase;
 import com.hcy.devicetest.utils.StringUtils;
+import com.hcy.devicetest.utils.SystemInfoUtils;
+
 import android.net.LinkProperties;
 import android.provider.Settings.System;
 import android.util.Log;
@@ -58,6 +63,12 @@ public class LanTest extends BaseTestCase {
     public boolean isEthernetAvailable() {
         return mConnectivityManager.isNetworkSupported(ConnectivityManager.TYPE_ETHERNET)
                 && mEthernetManager.getAvailableInterfaces().length > 0;
+    }
+
+    @Override
+    public void onTestInit() {
+        super.onTestInit();
+        ShellUtils.execCmd("ifconfig eth0 up",true);
     }
 
     private Network getFirstEthernet() {
@@ -101,14 +112,23 @@ public class LanTest extends BaseTestCase {
 	public boolean onTesting() {
 		hasRegister = true;
 		setTestTimeout(DEFAULT_TEST_TIMEOUT);
-		NetworkInfo networkInfo = mConnectivityManager.getActiveNetworkInfo();
-                if (networkInfo == null) {
-                      onTestFail(R.string.lan_err_disconnect);
-                } else {
-                     if(networkInfo.getType() == ConnectivityManager.TYPE_ETHERNET){
-                         onTestSuccess(getEthernetIpAddress());
-                     }
-                }
+        NetworkUtils.NetworkType type=NetworkUtils.getNetworkType();
+        if(type!= NetworkUtils.NetworkType.NETWORK_ETHERNET){
+            onTestFail(getString(R.string.lan_err_disconnect)+" type:"+type);
+        }else {
+            StringBuilder builder=new StringBuilder(SystemInfoUtils.getMac(mContext));
+            builder.append("\n");
+            builder.append(NetworkUtils.getIPAddress(true));
+            onTestSuccess(builder.toString());
+        }
+//		NetworkInfo networkInfo = mConnectivityManager.getActiveNetworkInfo();
+//                if (networkInfo == null) {
+//                      onTestFail(R.string.lan_err_disconnect);
+//                } else {
+//                     if(networkInfo.getType() == ConnectivityManager.TYPE_ETHERNET){
+//                         onTestSuccess(getEthernetIpAddress());
+//                     }
+//                }
 	/*	if(isEthernetAvailable()){//以太网已开启
 			boolean mConnect = (mEthManager.getEthernetConnectState() == EthernetManager.ETHER_STATE_CONNECTED);
                        Log.d("hjc","======mConnect:"+mConnect+"  =====getEthernetConnectState:"+mEthManager.getEthernetConnectState());

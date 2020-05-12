@@ -10,17 +10,28 @@ public class SendInfo {
     private String macAddr="";
     private String bluetoothAddr="";
     private String cpuserial="";
+    private String fingerprint="";
     private String licenseCode="";
 
-    public SendInfo(String wifiMacAddr, String macAddr, String bluetoothAddr, String cpuserial, String licenseCode) {
+    public SendInfo(String wifiMacAddr, String macAddr, String bluetoothAddr, String cpuserial, String fingerprint, String licenseCode) {
         this.wifiMacAddr = wifiMacAddr;
         this.macAddr = macAddr;
         this.bluetoothAddr = bluetoothAddr;
         this.cpuserial = cpuserial;
+        this.fingerprint = fingerprint;
         this.licenseCode = licenseCode;
     }
 
     public SendInfo() {
+    }
+
+
+    public String getFingerprint() {
+        return fingerprint;
+    }
+
+    public void setFingerprint(String fingerprint) {
+        this.fingerprint = fingerprint;
     }
 
     public String getWifiMacAddr() {

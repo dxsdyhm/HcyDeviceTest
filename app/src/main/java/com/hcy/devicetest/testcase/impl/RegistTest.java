@@ -2,6 +2,7 @@ package com.hcy.devicetest.testcase.impl;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -68,6 +69,7 @@ public class RegistTest extends BaseTestCase {
         sendInfo.setWifiMacAddr(SystemInfoUtils.getWifiMac(mContext));
         sendInfo.setMacAddr(SystemInfoUtils.getMac(mContext));
         sendInfo.setBluetoothAddr(IndexActivity.BlueMac);
+        sendInfo.setFingerprint(SystemProperties.get("ro.build.fingerprint",""));
         sendInfo.setCpuserial(SystemInfoUtils.getCpuSerial());
         String licencecode= null;
         try {
