@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/rl_vpu_content"
     tools:context=".AgingTestActivity">
-    <com.hcy.devicetest.view.VideoView
+    <com.rockchip.devicetest.view.VideoView
         android:id="@+id/vv_vpu" 
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VideoTestActivity">
-    <com.hcy.devicetest.view.VideoView
+    <com.rockchip.devicetest.view.VideoView
         android:id="@+id/test_vv" 
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -67,7 +67,7 @@
 	        	android:textColor="@android:color/white"
 	        	android:textSize="@dimen/main_listtitle_size"
 	        	android:paddingTop="@dimen/main_list_padtop"/>
-	       	<com.hcy.devicetest.testcase.TestCaseListView
+	       	<com.rockchip.devicetest.testcase.TestCaseListView
 		        android:id="@+id/main_list_view"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
