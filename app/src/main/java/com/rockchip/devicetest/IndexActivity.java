@@ -459,7 +459,7 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 					}
 				}
 				if(currentTestcase==null) return;
-				if(!currentTestcase.isTesting()&&testInfo.getResult()==TestResultType.FAIL||true){
+				if(!currentTestcase.isTesting()&&testInfo.getResult()==TestResultType.FAIL){
 					currentTestcase.onTestInit();
 					currentTestcase.onTesting();
 				}

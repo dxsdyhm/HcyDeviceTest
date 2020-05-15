@@ -31,6 +31,7 @@ import android.net.LinkProperties;
 import android.net.NetworkInfo;
 import android.net.Network;
 import android.net.LinkAddress;
+import android.os.SystemProperties;
 
 public class LanTest extends BaseTestCase {
 
@@ -57,7 +58,7 @@ public class LanTest extends BaseTestCase {
     @Override
     public void onTestInit() {
         super.onTestInit();
-        ShellUtils.execCmd("ifconfig eth0 up",true);
+        SystemProperties.set("persist.vendor.ethstate","2");
     }
 
     private Network getFirstEthernet() {

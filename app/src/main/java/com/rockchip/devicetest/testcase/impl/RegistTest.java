@@ -137,14 +137,14 @@ public class RegistTest extends BaseTestCase {
                 if(!TextUtils.isEmpty(deviceRegist.getSerialNO())){
                     jsonObject.put("usid",deviceRegist.getSerialNO());
                 }
-                if(!TextUtils.isEmpty(deviceRegist.getMac())){
-                    jsonObject.put("mac",deviceRegist.getMac());
+                if(!TextUtils.isEmpty(deviceRegist.getMacAddr())){
+                    jsonObject.put("mac",deviceRegist.getMacAddr());
                 }
-                if(!TextUtils.isEmpty(deviceRegist.getMacbt())){
-                    jsonObject.put("mac_bt",deviceRegist.getMacbt());
+                if(!TextUtils.isEmpty(deviceRegist.getBluetoothAddr())){
+                    jsonObject.put("mac_bt",deviceRegist.getBluetoothAddr());
                 }
-                if(!TextUtils.isEmpty(deviceRegist.getMacwifi())){
-                    jsonObject.put("mac_wifi",deviceRegist.getMacwifi());
+                if(!TextUtils.isEmpty(deviceRegist.getWifiMacAddr())){
+                    jsonObject.put("mac_wifi",deviceRegist.getWifiMacAddr());
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

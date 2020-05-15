@@ -18,6 +18,7 @@ import com.rockchip.devicetest.service.TestService;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.ComponentName;
+import android.os.SystemProperties;
 
 //proxy
 public class TestApplication extends Application {
@@ -31,6 +32,7 @@ public class TestApplication extends Application {
 		mActivityManager= (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 		super.onCreate();
 		HttpUtils.initHttp(this);
+		SystemProperties.set("persist.vendor.ethstate","4");
 	}
 	
 	public boolean isDispatcherReady(){

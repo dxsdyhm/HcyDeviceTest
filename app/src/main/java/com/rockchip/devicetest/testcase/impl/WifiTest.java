@@ -29,6 +29,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.net.NetworkInfo;
+import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.Log;
 //import android.net.ethernet.EthernetManager;
@@ -96,8 +97,7 @@ public class WifiTest extends BaseTestCase {
 		needConnectAp = "1".equals(attachParams.get(ParamConstants.WIFI_CONNECT));
 
 		if(needConnectAp){
-			ShellUtils.CommandResult result=ShellUtils.execCmd("ifconfig eth0 down",true);
-			Log.e("dxs",result.toString());
+			SystemProperties.set("persist.vendor.ethstate","3");
 		}
 		
 		//Check command parameter
@@ -137,7 +137,7 @@ public class WifiTest extends BaseTestCase {
 	@Override
 	public boolean onTestHandled(TestResult result) {
 		if(needConnectAp){
-			ShellUtils.execCmd("ifconfig eth0 up",true);
+			SystemProperties.set("persist.vendor.ethstate","2");
 		}
 		if(hasRegisterReceiver){
 			mContext.unregisterReceiver(mReceiver);

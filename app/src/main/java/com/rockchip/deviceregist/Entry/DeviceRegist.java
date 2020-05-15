@@ -16,20 +16,20 @@ public class DeviceRegist implements Serializable {
     private String surplus;
     private String publicIp;
     private String serialNO;
-    private String mac;
-    private String macwifi;
-    private String macbt;
+    private String macAddr;
+    private String wifiMacAddr;
+    private String bluetoothAddr;
 
     public DeviceRegist() {
     }
 
-    public DeviceRegist(String surplus, String publicIp, String serialNO, String mac, String macwifi, String macbt) {
+    public DeviceRegist(String surplus, String publicIp, String serialNO, String macAddr, String wifiMacAddr, String bluetoothAddr) {
         this.surplus = surplus;
         this.publicIp = publicIp;
         this.serialNO = serialNO;
-        this.mac = mac;
-        this.macwifi = macwifi;
-        this.macbt = macbt;
+        this.macAddr = macAddr;
+        this.wifiMacAddr = wifiMacAddr;
+        this.bluetoothAddr = bluetoothAddr;
     }
 
     public String getSurplus() {
@@ -56,28 +56,28 @@ public class DeviceRegist implements Serializable {
         this.serialNO = serialNO;
     }
 
-    public String getMac() {
-        return mac;
+    public String getMacAddr() {
+        return macAddr;
     }
 
-    public void setMac(String mac) {
-        this.mac = mac;
+    public void setMacAddr(String macAddr) {
+        this.macAddr = macAddr;
     }
 
-    public String getMacwifi() {
-        return macwifi;
+    public String getWifiMacAddr() {
+        return wifiMacAddr;
     }
 
-    public void setMacwifi(String macwifi) {
-        this.macwifi = macwifi;
+    public void setWifiMacAddr(String wifiMacAddr) {
+        this.wifiMacAddr = wifiMacAddr;
     }
 
-    public String getMacbt() {
-        return macbt;
+    public String getBluetoothAddr() {
+        return bluetoothAddr;
     }
 
-    public void setMacbt(String macbt) {
-        this.macbt = macbt;
+    public void setBluetoothAddr(String bluetoothAddr) {
+        this.bluetoothAddr = bluetoothAddr;
     }
 
     @Override
@@ -86,9 +86,9 @@ public class DeviceRegist implements Serializable {
                 "surplus='" + surplus + '\'' +
                 ", publicIp='" + publicIp + '\'' +
                 ", serialNO='" + serialNO + '\'' +
-                ", mac='" + mac + '\'' +
-                ", macwifi='" + macwifi + '\'' +
-                ", macbt='" + macbt + '\'' +
+                ", macAddr='" + macAddr + '\'' +
+                ", wifiMacAddr='" + wifiMacAddr + '\'' +
+                ", bluetoothAddr='" + bluetoothAddr + '\'' +
                 '}';
     }
 }
