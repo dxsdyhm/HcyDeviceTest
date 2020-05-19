@@ -104,7 +104,7 @@ public class LanTest extends BaseTestCase {
 		setTestTimeout(DEFAULT_TEST_TIMEOUT);
         NetworkUtils.NetworkType type=NetworkUtils.getNetworkType();
         if(type!= NetworkUtils.NetworkType.NETWORK_ETHERNET){
-            onTestFail(getString(R.string.lan_err_disconnect)+" type:"+type);
+            onTestFail(getString(R.string.lan_err_disconnect));
         }else {
             StringBuilder builder=new StringBuilder(SystemInfoUtils.getMac(mContext));
             builder.append("\n");
