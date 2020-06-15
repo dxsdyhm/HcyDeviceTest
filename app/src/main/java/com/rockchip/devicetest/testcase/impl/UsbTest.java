@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.os.Handler;
@@ -27,6 +28,7 @@ import android.util.Log;
 
 import com.rockchip.devicetest.ConfigFinder;
 import com.rockchip.devicetest.R;
+import com.rockchip.devicetest.constants.ParamConstants;
 import com.rockchip.devicetest.model.TestCaseInfo;
 import com.rockchip.devicetest.testcase.BaseTestCase;
 
@@ -35,6 +37,7 @@ public class UsbTest extends BaseTestCase {
     private static final String TEST_STRING = "Rockchip UsbHostTest File";
     private StringBuilder mDetailInfo;
     private Context mContext;
+    private int count =2;
 
 	public UsbTest(Context context, Handler handler, TestCaseInfo testcase) {
 		super(context, handler, testcase);
@@ -48,24 +51,41 @@ public class UsbTest extends BaseTestCase {
 	}
 	
 	public boolean onTesting() {
+		Map<String, String> attachParams = mTestCaseInfo.getAttachParams();
+		try {
+			count=Integer.parseInt(attachParams.get(ParamConstants.WIFI_CONNECT));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
 		List<String> usbPathList = ConfigFinder.getAliveUsbPath(mContext);
 		if(usbPathList.isEmpty()){
 			onTestFail(R.string.usb_err_unmount);
         	return false;
 		}
+
 		boolean result = true;
 		int usize = usbPathList.size();
 		mDetailInfo.delete(0, mDetailInfo.length());
+		int res=0;
+		int mark=0;
 		for(int i=0; i<usize; i++){
 			boolean testRes = testUsbDevice(usbPathList.get(i), usize==1?0:i+1);
-			if(testRes==false){
-				result = false;
+			if(testRes){
+				res|=1<<i;
 			}
+			mark|=1<<i;
 		}
-		if(result){
+		Log.e("dxs","res:"+res+" mark:"+mark);
+		if(count!=usize){
+			onTestFail("识别U盘数量错误（"+usize+"/"+count+")");
+			return false;
+		}
+		if(res==mark){
+			result=true;
 			onTestSuccess(mDetailInfo.toString());
 		}else{
-			onTestFail(mDetailInfo.toString());
+			result=false;
+			onTestFail(mDetailInfo.toString()+"("+res+"/"+mark+")");
 		}
 		return result;
 	}

@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.blankj.utilcode.util.FileIOUtils;
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.rockchip.deviceregist.Entry.DeviceRegist;
 import com.rockchip.deviceregist.Entry.SendInfo;
 import com.rockchip.deviceregist.SNInfo;
@@ -27,6 +28,10 @@ import com.zhouyou.http.exception.ApiException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -43,6 +48,7 @@ public class RegistTest extends BaseTestCase {
     private Context mContext;
     private SendInfo sendInfo=null;
     private DeviceRegist deviceRegist;
+    private String path;
     private static final int DEFAULT_INTERNET_TIMEOUT = 14 * 1000;
     public RegistTest(Context context, Handler handler, TestCaseInfo testcase) {
         super(context, handler, testcase);
@@ -52,6 +58,7 @@ public class RegistTest extends BaseTestCase {
     @Override
     public void onTestInit() {
         //config
+        path=ConfigFinder.logfilePath+File.separator+"log"+File.separator+ TimeUtils.date2String(new Date(),"yyyyMMdd")+".txt";
         init();
     }
 
@@ -95,7 +102,8 @@ public class RegistTest extends BaseTestCase {
         sendInfo.setCpuserial(SystemInfoUtils.getCpuSerial());
         String licencecode = null;
         try {
-            licencecode = FileIOUtils.readFile2String(ConfigFinder.findConfigFile(TestService.FILE_LICENCE, mContext));
+            List<String> licencecodes = FileIOUtils.readFile2List(ConfigFinder.findConfigFile(TestService.FILE_LICENCE, mContext));
+            licencecode=licencecodes.get(0);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -113,6 +121,7 @@ public class RegistTest extends BaseTestCase {
                     SNInfo snInfo=GsonUtils.fromJson(result,SNInfo.class);
                     if("ok".equals(snInfo.getErrString())){
                         onTestSuccess("成功:" + deviceRegist.getSerialNO() + " 剩余：" + deviceRegist.getSurplus());
+                        writeLog(deviceRegist);
                     }else {
                         onTestFail("error:"+UDPERROR_CLIENT_ERROR);
                     }
@@ -152,7 +161,6 @@ public class RegistTest extends BaseTestCase {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.e("dxs","GsonUtils.toJson(snInfo):"+jsonObject.toString());
                     client.send(jsonObject.toString());
                 }
             }).start();
@@ -165,5 +173,10 @@ public class RegistTest extends BaseTestCase {
         if(client!=null){
             client.setUdpLife(false);
         }
+    }
+
+    private void writeLog(DeviceRegist content){
+        String co=content.getSerialNO()+"|"+content.getPublicIp()+"|"+System.currentTimeMillis()+"|"+content.getSurplus()+"\n";
+        FileIOUtils.writeFileFromString(path,co,true);
     }
 }

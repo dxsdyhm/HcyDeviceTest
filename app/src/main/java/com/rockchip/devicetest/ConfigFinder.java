@@ -8,13 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 import android.util.Log;
 
+import com.rockchip.devicetest.service.TestService;
 import com.rockchip.devicetest.utils.StorageUtils;
 
 import android.content.Context;
 import android.os.Environment;
 import android.os.storage.StorageManager;
+import android.util.LogPrinter;
 
 public class ConfigFinder {
+	public static String logfilePath=null;
 	
        private Context mContext;
 	/**
@@ -90,6 +93,10 @@ public class ConfigFinder {
 	public static boolean hasConfigFile(String file,Context context){
 		File searchFile = findConfigFile(file,context);
 		boolean isExisted = searchFile!=null&&searchFile.exists();
+		if(isExisted&&TestService.FILE_FACTORY_TEST.equals(file)){
+			//write log to this location
+			logfilePath=searchFile.getParent();
+		}
 		return isExisted;
 	}
 	

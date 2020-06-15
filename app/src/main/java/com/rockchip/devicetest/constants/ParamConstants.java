@@ -26,6 +26,6 @@ public class ParamConstants {
 	
 	//Bluetooth
 	public static final String BT_NAME = "bt_name";
-	
-	
+	//usb
+	public static final String USB_COUNT = "count";
 }
