@@ -154,4 +154,33 @@
 			android:textColor="@android:color/white"
 			android:textSize="@dimen/main_listitem_size_s" />
 	</LinearLayout>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:minHeight="@dimen/main_listitem_height"
+		android:orientation="horizontal"
+		tools:context=".IndexActivity">
+
+		<TextView
+			android:layout_width="0dip"
+			android:layout_height="match_parent"
+			android:layout_weight="0.12"
+			android:background="@drawable/main_list_item_bg"
+			android:contentDescription="@null"
+			android:gravity="center"
+			android:text="@string/package_time"
+			android:textColor="@android:color/white"
+			android:textSize="@dimen/main_listitem_size" />
+		<TextView
+			android:id="@+id/tv_packagetime"
+			android:layout_width="0dip"
+			android:layout_height="match_parent"
+			android:layout_weight="0.88"
+			android:background="@drawable/main_list_item_bg"
+			android:contentDescription="@null"
+			android:gravity="center"
+			android:singleLine="true"
+			android:textColor="@android:color/white"
+			android:textSize="@dimen/main_listitem_size_s" />
+	</LinearLayout>
 </LinearLayout>

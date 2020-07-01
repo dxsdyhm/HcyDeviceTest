@@ -8,8 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
+import com.blankj.utilcode.constant.TimeConstants;
+import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.rockchip.devicetest.adapter.TestCaseArrayAdapter;
 import com.rockchip.devicetest.constants.ParamConstants;
 import com.rockchip.devicetest.enumerate.Commands;
@@ -96,7 +100,17 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 		//version
 		TextView softVersionText = (TextView)findViewById(R.id.tv_soft_ver);
 		softVersionText.setText(SystemInfoUtils.getAppVersionName(this));
-				
+
+		TextView packageTime=findViewById(R.id.tv_packagetime);
+		try {
+			long time=Long.parseLong(SystemProperties.get("ro.build.date.utc","0"));
+			packageTime.setText(TimeUtils.millis2String(time,"yyyyMMddHHmm"));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			String temp=SystemProperties.get("ro.build.version.incremental","0");
+			packageTime.setText(temp);
+		}
+
 		//Activity is created, and be ready
 		mApp = (TestApplication)getApplication();
 		mApp.mIndexActivity = this;
