@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.blankj.utilcode.constant.TimeConstants;
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.rockchip.devicetest.adapter.TestCaseArrayAdapter;
@@ -102,14 +103,8 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 		softVersionText.setText(SystemInfoUtils.getAppVersionName(this));
 
 		TextView packageTime=findViewById(R.id.tv_packagetime);
-		try {
-			long time=Long.parseLong(SystemProperties.get("ro.build.date.utc","0"));
-			packageTime.setText(TimeUtils.millis2String(time,"yyyyMMddHHmm"));
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			String temp=SystemProperties.get("ro.build.version.incremental","0");
-			packageTime.setText(temp);
-		}
+		String temp=SystemProperties.get("ro.system.build.fingerprint","0");
+		packageTime.setText(temp);
 
 		//Activity is created, and be ready
 		mApp = (TestApplication)getApplication();

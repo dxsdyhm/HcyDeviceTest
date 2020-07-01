@@ -159,6 +159,7 @@
 		android:layout_height="wrap_content"
 		android:minHeight="@dimen/main_listitem_height"
 		android:orientation="horizontal"
+		android:visibility="gone"
 		tools:context=".IndexActivity">
 
 		<TextView
@@ -178,7 +179,7 @@
 			android:layout_weight="0.88"
 			android:background="@drawable/main_list_item_bg"
 			android:contentDescription="@null"
-			android:gravity="center"
+			android:gravity="center_vertical"
 			android:singleLine="true"
 			android:textColor="@android:color/white"
 			android:textSize="@dimen/main_listitem_size_s" />
