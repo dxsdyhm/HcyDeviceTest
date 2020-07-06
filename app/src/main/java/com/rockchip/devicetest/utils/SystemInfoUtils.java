@@ -91,7 +91,7 @@ public class SystemInfoUtils {
      */
     public static String getFormattedFlashSpace(Context context) {
         String data = Environment.getDataDirectory().getPath();
-        long flashSize = FileUtils.getFsTotalSize(data);
+        long totalspace = FileUtils.getFsTotalSize(data);
 
         long othersize = 0;
         String othersize_s = SystemProperties.get("ro.product.otherdata", "0");
@@ -100,21 +100,26 @@ public class SystemInfoUtils {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        flashSize += othersize;
-        flashSize = (long) (Math.ceil(flashSize / 1024.00 / 1024.00 / 1024.00) * 1024 * 1024 * 1024);
-        String szie = Formatter.formatFileSize(context, flashSize);
-        if ((flashSize / 1024 / 1024 / 1024) > 4 && (flashSize / 1024 / 1024 / 1024) < 8)
-            szie = "8GB";
-        if ((flashSize / 1024 / 1024 / 1024) > 8 && (flashSize / 1024 / 1024 / 1024) < 16)
-            szie = "16GB";
-        if ((flashSize / 1024 / 1024 / 1024) > 16 && (flashSize / 1024 / 1024 / 1024) < 32)
-            szie = "32GB";
-        if ((flashSize / 1024 / 1024 / 1024) > 32 && (flashSize / 1024 / 1024 / 1024) < 64)
-            szie = "64GB";
-        if ((flashSize / 1024 / 1024 / 1024) > 64 && (flashSize / 1024 / 1024 / 1024) < 128)
-            szie = "128GB";
-
-        return szie;
+        totalspace += othersize;
+        if (2147483648L < totalspace && totalspace < 4294967296L) {
+            totalspace = 4000000000L;
+        }
+        if (4294967296L < totalspace && totalspace < 8589934592L) {
+            totalspace = 8000000000L;
+        }
+        if(8589934592L < totalspace && totalspace < 17179869184L){
+            totalspace = 16000000000L;
+        }
+        if(17179869184L < totalspace && totalspace < 34359738368L){
+            totalspace = 32000000000L;
+        }
+        if(34359738368L < totalspace && totalspace < 68719476736L){
+            totalspace = 64000000000L;
+        }
+        if(68719476736L < totalspace && totalspace < 137438953472L){
+            totalspace = 128000000000L;
+        }
+        return Formatter.formatFileSize(context, totalspace);
     }
 
     /**

@@ -81,12 +81,12 @@
 			android:id="@+id/tv_model"
 			android:layout_width="0dip"
 			android:layout_height="match_parent"
-			android:layout_weight="0.14"
+			android:layout_weight="0.17"
 			android:background="@drawable/main_list_item_bg"
 			android:contentDescription="@null"
 			android:gravity="center"
 			android:textColor="@android:color/white"
-			android:textSize="@dimen/main_listitem_size_s" />
+			android:textSize="@dimen/main_listitem_size_ss" />
 
 		<TextView
 			android:layout_width="0dip"
@@ -103,7 +103,7 @@
 			android:id="@+id/tv_ram"
 			android:layout_width="0dip"
 			android:layout_height="match_parent"
-			android:layout_weight="0.11"
+			android:layout_weight="0.08"
 			android:background="@drawable/main_list_item_bg"
 			android:contentDescription="@null"
 			android:gravity="center"

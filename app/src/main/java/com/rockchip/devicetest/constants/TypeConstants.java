@@ -32,6 +32,7 @@ public class TypeConstants {
 	public static final String CMD_MIC = "MIC";//麦克风
 	public static final String CMD_BT = "BT";//蓝牙
 	public static final String CMD_INTERNET = "INTERNET";//联网（实际是激活）
+	public static final String CMD_WIFI2 = "WIFI2";//5G wifi
 
 	//CommandType
 	public static final int TYPE_CMD = 0;

@@ -352,7 +352,8 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 		TextView versionText = (TextView)findViewById(R.id.tv_version);
 		TextView ramText = (TextView)findViewById(R.id.tv_ram);
 		TextView flashText = (TextView)findViewById(R.id.tv_flash);
-		modelText.setText(Build.PRODUCT);
+		String devName=SystemProperties.get("ro.product.model","unknown");
+		modelText.setText(Build.PRODUCT+"/"+devName);
 		String version=Build.DISPLAY+"\n"+SystemInfoUtils.getVersion();
 		versionText.setText(version);
 		snText.setText(SystemProperties.get("ro.serialno","unknown"));
