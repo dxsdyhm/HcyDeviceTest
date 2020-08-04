@@ -230,6 +230,40 @@ public class SystemInfoUtils {
             //赋予默认值
             ex.printStackTrace();
         }
+        if(TextUtils.isEmpty(cpuinfo)){
+            cpuinfo=getSoftWinnerCpuSerial();
+        }
+        return cpuinfo;
+    }
+
+    public static String getSoftWinnerCpuSerial() {
+        String cpuinfo = "";
+        try {
+            //读取CPU信息
+            Process pp = Runtime.getRuntime().exec("cat /sys/class/sunxi_info/sys_info");
+            InputStreamReader ir = new InputStreamReader(pp.getInputStream());
+            LineNumberReader input = new LineNumberReader(ir);
+            //查找CPU序列号
+            for (int i = 1; i < 100; i++) {
+                String str = input.readLine();
+                if (str != null) {
+                    //查找到序列号所在行
+                    if (str.contains("sunxi_chipid")) {
+                        //提取序列号
+                        cpuinfo = str.substring(str.indexOf(":") + 1, str.length());
+                        //去空格
+                        cpuinfo = cpuinfo.trim();
+                        break;
+                    }
+                } else {
+                    //文件结尾
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            //赋予默认值
+            ex.printStackTrace();
+        }
         return cpuinfo;
     }
 
