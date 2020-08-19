@@ -241,9 +241,13 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 	 */
 	public static void fogetWifi(Context context){
 		if(NetworkUtils.isWifiConnected()){
-			WifiManager mWifiManager = (WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-			WifiInfo info=mWifiManager.getConnectionInfo();
-			mWifiManager.forget(info.getNetworkId(), null);
+			try {
+				WifiManager mWifiManager = (WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+				WifiInfo info=mWifiManager.getConnectionInfo();
+				mWifiManager.forget(info.getNetworkId(), null);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
