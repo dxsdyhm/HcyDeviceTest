@@ -148,4 +148,5 @@
     <string name="aging_test_check">老化测试前, 请先进行功能测试.</string>
     <string name="aging_test_back">再按<xliff:g>%s</xliff:g>次退出.</string>
     <string name="package_time">标签</string>
+    <string name="sys_info">信息</string>
 </resources>

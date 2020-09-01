@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.blankj.utilcode.util.FileIOUtils;
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.rockchip.deviceregist.Entry.DeviceRegist;
 import com.rockchip.deviceregist.Entry.SendInfo;
@@ -50,6 +51,8 @@ public class RegistTest extends BaseTestCase {
     private DeviceRegist deviceRegist;
     private String path;
     private static final int DEFAULT_INTERNET_TIMEOUT = 14 * 1000;
+    public static String KEY_MAC="KEY_MAC";
+    public static String KEY_SERIL="KEY_SERIL";
     public RegistTest(Context context, Handler handler, TestCaseInfo testcase) {
         super(context, handler, testcase);
         mContext = context;
@@ -121,6 +124,8 @@ public class RegistTest extends BaseTestCase {
                     SNInfo snInfo=GsonUtils.fromJson(result,SNInfo.class);
                     if("ok".equals(snInfo.getErrString())){
                         onTestSuccess("成功:" + deviceRegist.getSerialNO() + " 剩余：" + deviceRegist.getSurplus());
+                        SPUtils.getInstance().put(KEY_MAC,deviceRegist.getMacAddr());
+                        SPUtils.getInstance().put(KEY_SERIL,deviceRegist.getSerialNO());
                         writeLog(deviceRegist);
                     }else {
                         onTestFail("error:"+UDPERROR_CLIENT_ERROR);

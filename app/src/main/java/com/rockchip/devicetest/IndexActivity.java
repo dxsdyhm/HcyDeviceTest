@@ -14,6 +14,7 @@ import com.blankj.utilcode.constant.TimeConstants;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.rockchip.devicetest.adapter.TestCaseArrayAdapter;
 import com.rockchip.devicetest.constants.ParamConstants;
@@ -27,6 +28,7 @@ import com.rockchip.devicetest.testcase.BaseTestCase;
 import com.rockchip.devicetest.testcase.IHandlerCallback;
 import com.rockchip.devicetest.testcase.TestCaseListView;
 import com.rockchip.devicetest.testcase.TestCaseListView.ListViewLoadListener;
+import com.rockchip.devicetest.testcase.impl.RegistTest;
 import com.rockchip.devicetest.utils.IniEditor;
 import com.rockchip.devicetest.utils.IniEditor.Section;
 import com.rockchip.devicetest.utils.LogUtil;
@@ -47,6 +49,7 @@ import android.os.Handler;
 import android.os.SystemProperties;
 import android.os.storage.StorageManager;
 import android.os.storage.StorageEventListener;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
@@ -102,14 +105,12 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 		TextView softVersionText = (TextView)findViewById(R.id.tv_soft_ver);
 		softVersionText.setText(SystemInfoUtils.getAppVersionName(this));
 
-		TextView packageTime=findViewById(R.id.tv_packagetime);
-		String temp=SystemProperties.get("ro.system.build.fingerprint","0");
-		packageTime.setText(temp);
-
 		//Activity is created, and be ready
 		mApp = (TestApplication)getApplication();
 		mApp.mIndexActivity = this;
 		isRunningTask = false;
+
+		UpdateRegistInfo();
 	}
 	
 	@Override
@@ -122,6 +123,7 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 			mApp.setActivityReady(false);
 			initTestCase(intent);
 		}
+		UpdateRegistInfo();
 	}
 	
 	protected void onStart() {
@@ -224,6 +226,7 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 						LogUtil.e(this, "Failed to create ftest_pass.bin");
 					}
 				}
+				UpdateRegistInfo();
 				fogetWifi(IndexActivity.this);
 				saveFactoryTest(ret);
 				LogUtil.d(this, "Test Finished. Result: "+ret);
@@ -240,15 +243,15 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 	 * 如果当前已连接wifi，则忘记
 	 */
 	public static void fogetWifi(Context context){
-		if(NetworkUtils.isWifiConnected()){
-			try {
-				WifiManager mWifiManager = (WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-				WifiInfo info=mWifiManager.getConnectionInfo();
-				mWifiManager.forget(info.getNetworkId(), null);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+//		if(NetworkUtils.isWifiConnected()){
+//			try {
+//				WifiManager mWifiManager = (WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+//				WifiInfo info=mWifiManager.getConnectionInfo();
+//				mWifiManager.forget(info.getNetworkId(), null);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 	}
 	
 	/**
@@ -344,6 +347,32 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 			}
 		}
 		mTestListView.setDataSource(mTestCaseList);
+	}
+
+	private void UpdateRegistInfo(){
+		TextView txInfo=findViewById(R.id.tv_info);
+		txInfo.setText("");
+
+		TextView packageTime=findViewById(R.id.tv_packagetime);
+		//String temp=SystemProperties.get("ro.system.build.fingerprint","0");
+		packageTime.setText(SystemInfoUtils.getCpuSerial());
+
+		TextView snText = (TextView)findViewById(R.id.tv_sn);
+		TextView macText = (TextView)findViewById(R.id.tv_mac);
+
+		String mac=SPUtils.getInstance().getString(RegistTest.KEY_MAC,"");
+		if(TextUtils.isEmpty(mac)){
+			macText.setText(SystemInfoUtils.getMac(this));
+		}else {
+			macText.setText(mac);
+		}
+
+		String sn=SPUtils.getInstance().getString(RegistTest.KEY_SERIL);
+		if(TextUtils.isEmpty(sn)){
+			snText.setText(SystemProperties.get("ro.serialno","unknown"));
+		}else {
+			snText.setText(sn);
+		}
 	}
 	
 	/**
