@@ -12,14 +12,16 @@ public class SendInfo {
     private String cpuserial="";
     private String fingerprint="";
     private String licenseCode="";
+    private String model="";
 
-    public SendInfo(String wifiMacAddr, String macAddr, String bluetoothAddr, String cpuserial, String fingerprint, String licenseCode) {
+    public SendInfo(String wifiMacAddr, String macAddr, String bluetoothAddr, String cpuserial, String fingerprint, String licenseCode, String model) {
         this.wifiMacAddr = wifiMacAddr;
         this.macAddr = macAddr;
         this.bluetoothAddr = bluetoothAddr;
         this.cpuserial = cpuserial;
         this.fingerprint = fingerprint;
         this.licenseCode = licenseCode;
+        this.model = model;
     }
 
     public SendInfo() {
@@ -74,6 +76,14 @@ public class SendInfo {
         this.cpuserial = cpuserial;
     }
 
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
     @Override
     public String toString() {
         return "SendInfo{" +
@@ -81,7 +91,9 @@ public class SendInfo {
                 ", macAddr='" + macAddr + '\'' +
                 ", bluetoothAddr='" + bluetoothAddr + '\'' +
                 ", cpuserial='" + cpuserial + '\'' +
+                ", fingerprint='" + fingerprint + '\'' +
                 ", licenseCode='" + licenseCode + '\'' +
+                ", model='" + model + '\'' +
                 '}';
     }
 }

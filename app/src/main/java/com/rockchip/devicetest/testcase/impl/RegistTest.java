@@ -102,6 +102,7 @@ public class RegistTest extends BaseTestCase {
         sendInfo.setMacAddr(SystemInfoUtils.getMac(mContext));
         sendInfo.setBluetoothAddr(IndexActivity.BlueMac);
         sendInfo.setFingerprint(SystemProperties.get("ro.build.fingerprint", ""));
+        sendInfo.setModel(SystemProperties.get("ro.product.model", ""));
         sendInfo.setCpuserial(SystemInfoUtils.getCpuSerial());
         String licencecode = null;
         try {

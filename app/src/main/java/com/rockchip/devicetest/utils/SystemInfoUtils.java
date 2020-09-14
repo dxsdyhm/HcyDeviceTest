@@ -282,10 +282,8 @@ public class SystemInfoUtils {
 
     public static String getVersion() {
         String version = "";
-        version = SystemProperties.get("ro.product.firmware", "");
-        if (TextUtils.isEmpty(version)) {
-            version = SystemProperties.get("ro.product.version", "");
-        }
-        return version;
+        String firm = SystemProperties.get("ro.product.firmware", "");
+        version = SystemProperties.get("ro.product.version", "");
+        return firm+"/"+version;
     }
 }
