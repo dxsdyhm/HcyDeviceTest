@@ -133,7 +133,10 @@ public class SystemInfoUtils {
             line = line.substring(begin + 1, end).trim();
             int total = Integer.parseInt(line);
             String space = Formatter.formatFileSize(context, total * 1024);
-            if (total > 2200000)
+            String space_real = Formatter.formatFileSize(context, total * 1024);
+            if (total > 4200000)
+                space = "8GB";
+            if (total > 2200000 && total < 4200000)
                 space = "4GB";
             if (total > 1200000 && total < 2200000)
                 space = "2GB";
@@ -141,7 +144,7 @@ public class SystemInfoUtils {
                 space = "1GB";
             if (total > 270000 && total < 530000)
                 space = "512MB";
-            return space;
+            return space+" / "+space_real;
         } catch (Exception e) {
         }
         return null;

@@ -96,9 +96,9 @@ public class WifiTest extends BaseTestCase {
 		//Check connect wifi ap
 		needConnectAp = "1".equals(attachParams.get(ParamConstants.WIFI_CONNECT));
 
-		if(needConnectAp){
-			SystemProperties.set("persist.vendor.ethstate","3");
-		}
+//		if(needConnectAp){
+//			SystemProperties.set("persist.vendor.ethstate","3");
+//		}
 		
 		//Check command parameter
 		mStartSignalLevel = StringUtils.parseInt(attachParams.get(ParamConstants.WIFI_DB_START), 999);
@@ -136,9 +136,9 @@ public class WifiTest extends BaseTestCase {
 	
 	@Override
 	public boolean onTestHandled(TestResult result) {
-		if(needConnectAp){
-			SystemProperties.set("persist.vendor.ethstate","2");
-		}
+//		if(needConnectAp){
+//			SystemProperties.set("persist.vendor.ethstate","2");
+//		}
 		if(hasRegisterReceiver){
 			mContext.unregisterReceiver(mReceiver);
 			hasRegisterReceiver = false;

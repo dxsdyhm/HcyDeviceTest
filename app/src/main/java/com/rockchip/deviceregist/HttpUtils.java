@@ -1,6 +1,7 @@
 package com.rockchip.deviceregist;
 
 import android.app.Application;
+import android.os.Handler;
 
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.cache.converter.SerializableDiskConverter;
@@ -14,7 +15,7 @@ import com.zhouyou.http.model.HttpParams;
  * @Email: duanxuesong12@126.com
  */
 public class HttpUtils {
-    public static String BASE_URL = "https://tvbox.hcybox.net:31443/";
+    public static String BASE_URL = "http://active.hcybox.net:31080/";
 
     public static void initHttp(Application context) {
         EasyHttp.init(context);//默认初始化,必须调用

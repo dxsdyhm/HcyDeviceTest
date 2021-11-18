@@ -6,11 +6,14 @@ import java.util.Collections;
 import java.util.List;
 import java.lang.reflect.Method;
 
+import android.os.Build;
 import android.util.Log;
 import android.os.Environment;
 import android.os.storage.StorageManager;
 import android.os.storage.VolumeInfo;
 import android.os.storage.DiskInfo;
+
+import com.rockchip.devicetest.BuildConfig;
 
 /** 
  *StorageUtils is use to get correct storage path between ics and gingerbread.
@@ -122,8 +125,11 @@ public class StorageUtils {
                 if (disk != null) {
                     if (disk.isUsb()) {
                         // TODO: 2020/5/6 本地测试使用path,正式环境改为internalPath
-                    	//usbPaths.add(vol.path);
-                    	usbPaths.add(vol.internalPath);
+                        if(Build.VERSION.SDK_INT >= 30){
+                            usbPaths.add(vol.path);
+                        }else {
+                            usbPaths.add(vol.internalPath);
+                        }
                     }
                 }
             }
@@ -195,29 +201,6 @@ public class StorageUtils {
             return null;
         }
     }
-    
-    public static String getFlashDir(){
-        if(android.os.Build.VERSION.SDK_INT == android.os.Build.VERSION_CODES.GINGERBREAD){
-            Log.d(TAG,"%%%%%%%%%%-------- using at gingerbread2.3.1 ----------!!!");
-            return ((File)invokeStaticMethod("android.os.Environment","getFlashStorageDirectory",null)).getPath();
-        }else if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.GINGERBREAD){
-            Log.d(TAG,"%%%%%%%%%%-------- using at ics4.0.3 ----------!!!");
-            return ((File)invokeStaticMethod("android.os.Environment","getExternalStorageDirectory",null)).getPath();
-        }
-        return null;
-    }
-
-    public static String getFlashState(){
-        if(android.os.Build.VERSION.SDK_INT == android.os.Build.VERSION_CODES.GINGERBREAD){
-            Log.d(TAG,"%%%%%%%%%%-------- using at gingerbread2.3.1 ----------!!!");
-            return (String)invokeStaticMethod("android.os.Environment","getFlashStorageState",null);
-        }else if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.GINGERBREAD){
-            Log.d(TAG,"%%%%%%%%%%-------- using at ics4.0.3 ----------!!!");
-            return (String)invokeStaticMethod("android.os.Environment","getExternalStorageState",null);
-        }
-        return Environment.MEDIA_REMOVED;
-    }
-
 
     public static Object invokeStaticMethod(Class<?> cls, String methodName, Object... arguments) {
         try {

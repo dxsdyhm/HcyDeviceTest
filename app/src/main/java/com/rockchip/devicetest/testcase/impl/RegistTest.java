@@ -17,6 +17,8 @@ import com.rockchip.deviceregist.SNInfo;
 import com.rockchip.deviceregist.UDPClient;
 import com.rockchip.devicetest.ConfigFinder;
 import com.rockchip.devicetest.IndexActivity;
+import com.rockchip.devicetest.R;
+import com.rockchip.devicetest.constants.ParamConstants;
 import com.rockchip.devicetest.model.TestCaseInfo;
 import com.rockchip.devicetest.model.TestResult;
 import com.rockchip.devicetest.service.TestService;
@@ -33,6 +35,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -61,7 +64,6 @@ public class RegistTest extends BaseTestCase {
     @Override
     public void onTestInit() {
         //config
-        path=ConfigFinder.logfilePath+File.separator+"log"+File.separator+ TimeUtils.date2String(new Date(),"yyyyMMdd")+".txt";
         init();
     }
 
@@ -71,6 +73,16 @@ public class RegistTest extends BaseTestCase {
             onTestFail("未发现授权码");
             return false;
         }
+        if(mTestCaseInfo!=null&&mTestCaseInfo.getAttachParams()!=null){
+            //没有配置用默认
+            //Check specified wifi ap
+            Map<String, String> attachParams = mTestCaseInfo.getAttachParams();
+            String baseurl=attachParams.getOrDefault(ParamConstants.BASE_URL,"");
+            if(!TextUtils.isEmpty(baseurl)){
+                EasyHttp.getInstance().setBaseUrl(baseurl);
+            }
+        }
+
         EasyHttp.post("api/v1/device/active")
                 .upJson(GsonUtils.toJson(sendInfo))
                 .execute(new SimpleCallBack<DeviceRegist>() {
@@ -129,7 +141,7 @@ public class RegistTest extends BaseTestCase {
                         SPUtils.getInstance().put(KEY_SERIL,deviceRegist.getSerialNO());
                         writeLog(deviceRegist);
                     }else {
-                        onTestFail("error:"+UDPERROR_CLIENT_ERROR);
+                        onTestFail("error:"+UDPERROR_CLIENT_ERROR+snInfo.getErrString());
                     }
                     break;
                 default:
@@ -182,7 +194,8 @@ public class RegistTest extends BaseTestCase {
     }
 
     private void writeLog(DeviceRegist content){
-        String co=content.getSerialNO()+"|"+content.getPublicIp()+"|"+System.currentTimeMillis()+"|"+content.getSurplus()+"\n";
+        path=ConfigFinder.logfilePath+File.separator+"log"+File.separator+ TimeUtils.millis2String(content.getSystemTime(),"yyyyMMdd")+".txt";
+        String co=content.getSerialNO()+"|"+content.getPublicIp()+"|"+content.getSystemTime()+"|"+content.getSurplus()+"\n";
         FileIOUtils.writeFileFromString(path,co,true);
     }
 }

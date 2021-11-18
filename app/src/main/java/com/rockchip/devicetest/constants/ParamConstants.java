@@ -28,4 +28,9 @@ public class ParamConstants {
 	public static final String BT_NAME = "bt_name";
 	//usb
 	public static final String USB_COUNT = "count";
+	//regist url
+	public static final String BASE_URL ="url";
+	public static final String LAN_STOP ="lan_stop";
+	public static final String CMD_IPERF ="cmd_iperf";
+	public static final String SPEED_MIN ="band_min";
 }

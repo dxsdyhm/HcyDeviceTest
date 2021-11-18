@@ -361,11 +361,7 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 		TextView macText = (TextView)findViewById(R.id.tv_mac);
 
 		String mac=SPUtils.getInstance().getString(RegistTest.KEY_MAC,"");
-		if(TextUtils.isEmpty(mac)){
-			macText.setText(SystemInfoUtils.getMac(this));
-		}else {
-			macText.setText(mac);
-		}
+		macText.setText(SystemInfoUtils.getMac(this));
 
 		String sn=SPUtils.getInstance().getString(RegistTest.KEY_SERIL);
 		if(TextUtils.isEmpty(sn)){

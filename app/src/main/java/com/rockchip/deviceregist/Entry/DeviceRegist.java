@@ -19,17 +19,19 @@ public class DeviceRegist implements Serializable {
     private String macAddr;
     private String wifiMacAddr;
     private String bluetoothAddr;
+    private long systemTime;
 
     public DeviceRegist() {
     }
 
-    public DeviceRegist(String surplus, String publicIp, String serialNO, String macAddr, String wifiMacAddr, String bluetoothAddr) {
+    public DeviceRegist(String surplus, String publicIp, String serialNO, String macAddr, String wifiMacAddr, String bluetoothAddr, long systemTime) {
         this.surplus = surplus;
         this.publicIp = publicIp;
         this.serialNO = serialNO;
         this.macAddr = macAddr;
         this.wifiMacAddr = wifiMacAddr;
         this.bluetoothAddr = bluetoothAddr;
+        this.systemTime = systemTime;
     }
 
     public String getSurplus() {
@@ -78,6 +80,14 @@ public class DeviceRegist implements Serializable {
 
     public void setBluetoothAddr(String bluetoothAddr) {
         this.bluetoothAddr = bluetoothAddr;
+    }
+
+    public long getSystemTime() {
+        return systemTime;
+    }
+
+    public void setSystemTime(long systemTime) {
+        this.systemTime = systemTime;
     }
 
     @Override

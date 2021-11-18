@@ -22,16 +22,21 @@ import android.os.Handler;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ShellUtils;
 import com.rockchip.devicetest.R;
+import com.rockchip.devicetest.constants.ParamConstants;
 import com.rockchip.devicetest.model.TestCaseInfo;
 import com.rockchip.devicetest.model.TestResult;
 import com.rockchip.devicetest.testcase.BaseTestCase;
 import com.rockchip.devicetest.utils.SystemInfoUtils;
+import com.zhouyou.http.EasyHttp;
 
 import android.net.LinkProperties;
 import android.net.NetworkInfo;
 import android.net.Network;
 import android.net.LinkAddress;
 import android.os.SystemProperties;
+import android.text.TextUtils;
+
+import java.util.Map;
 
 public class LanTest extends BaseTestCase {
 
@@ -110,6 +115,15 @@ public class LanTest extends BaseTestCase {
             builder.append("\n");
             builder.append(NetworkUtils.getIPAddress(true));
             onTestSuccess(builder.toString());
+            if(mTestCaseInfo!=null&&mTestCaseInfo.getAttachParams()!=null){
+                //没有配置用默认
+                //Check specified wifi ap
+                Map<String, String> attachParams = mTestCaseInfo.getAttachParams();
+                String lanStop=attachParams.getOrDefault(ParamConstants.LAN_STOP,"1");
+                if("1".equals(lanStop)){
+                    SystemProperties.set("persist.vendor.ethstate","3");
+                }
+            }
         }
 //		NetworkInfo networkInfo = mConnectivityManager.getActiveNetworkInfo();
 //                if (networkInfo == null) {
