@@ -33,6 +33,10 @@ public class BootReceiver extends BroadcastReceiver {
 				newIntent.putExtra(TestService.EXTRA_KEY_TESTFROM, "app");
 			}else{
 				newIntent.putExtra(TestService.EXTRA_KEY_TESTFROM, "mount");
+				if(!path.contains("storage/emulated/0")){
+					String upath = intent.getDataString().replace("file://","");
+					newIntent.putExtra(TestService.EXTRA_KEY_UPATH,upath);
+				}
 			}
 			mContext.startService(newIntent);
 		}else if(Intent.ACTION_BOOT_COMPLETED.equals(action)){

@@ -14,6 +14,7 @@ package com.rockchip.devicetest.service;
 
 
 import com.rockchip.devicetest.AgingTestActivity;
+import com.rockchip.devicetest.ApkInstallActivity;
 import com.rockchip.devicetest.ConfigFinder;
 import com.rockchip.devicetest.IndexActivity;
 import com.rockchip.devicetest.TestApplication;
@@ -32,6 +33,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.os.storage.StorageManager;
+import android.text.TextUtils;
 
 public class TestService extends Service {
 
@@ -39,10 +41,12 @@ public class TestService extends Service {
 	public static final String SP_KEY_FACTORY = "factory";
 	public static final String EXTRA_KEY_TESTDATA = "TESTDATA";
 	public static final String EXTRA_KEY_TESTFROM = "TESTFROM";
+	public static final String EXTRA_KEY_UPATH = "UPATH";
 	public static final String FILE_FACTORY_TEST = "Factory_Test.bin";
 	public static final String FILE_AGING_TEST = "Aging_Test.bin";
 	public static final String FILE_SN_TEST = "SN_Test.bin";
 	public static final String FILE_LICENCE = "License.bin";
+	public static final String FILE_INSTALLAPK = "install.bin";
 	private TestApplication mApp;
 	private boolean isStartingActivity;
 	private boolean hasStartedActivity;
@@ -52,6 +56,7 @@ public class TestService extends Service {
 	private Handler mMainHandler;
 	private StorageManager mStorageManager = null;
 	private boolean mFirstMount;
+	private String uPath="";
 	
 	//TODO FileObserve
 	
@@ -74,6 +79,7 @@ public class TestService extends Service {
 		if("app".equals(startFrom)){
 			return super.onStartCommand(intent, flags, startId);
 		}else if("mount".equals(startFrom)){
+			uPath=intent.getStringExtra(EXTRA_KEY_UPATH);
 			if(!mFirstMount){
 				mFirstMount = true;
 				startTest();
@@ -167,6 +173,13 @@ public class TestService extends Service {
 		}else if(isInSNTest()){
 			UsbSettings.enableADB(this);
 			UsbSettings.setUsbSlaveMode();
+		}else if(isInInstallApk()){
+			if(!TextUtils.isEmpty(uPath)){
+				startActivityWait(ApkInstallActivity.class);
+				LogUtil.d(this, "start install usb apk."+uPath);
+			}else {
+				LogUtil.e(this, "install apk path is null");
+			}
 		}else{
 			LogUtil.d(this, "It is not in factory/aging test mode.");
 		}
@@ -180,6 +193,7 @@ public class TestService extends Service {
 		Intent agingIntent = new Intent();
 		agingIntent.setClass(this, activity);
 		agingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		agingIntent.putExtra(EXTRA_KEY_UPATH,uPath);
 		startActivity(agingIntent);
 	}
 	
@@ -218,6 +232,13 @@ public class TestService extends Service {
 	 */
 	private boolean isInSNTest(){
 		return ConfigFinder.hasConfigFile(FILE_SN_TEST,this);
+	}
+
+	/**
+	 * 检测是否有Install_apk.bin文件
+	 */
+	private boolean isInInstallApk(){
+		return ConfigFinder.hasConfigFile(FILE_INSTALLAPK,this);
 	}
 	
 }

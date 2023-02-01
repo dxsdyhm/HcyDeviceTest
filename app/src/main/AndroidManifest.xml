@@ -46,6 +46,11 @@
             android:launchMode="singleInstance">
         </activity>
         <activity
+            android:name="com.rockchip.devicetest.ApkInstallActivity"
+            android:exported="true"
+            android:launchMode="singleInstance">
+        </activity>
+        <activity
             android:name="com.rockchip.devicetest.AgingTestActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance">

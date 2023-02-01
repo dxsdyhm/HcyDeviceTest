@@ -36,7 +36,8 @@ public enum Commands {
 	CMD_WIFI2(TypeConstants.CMD_WIFI2, R.string.cmd_wifi2),
 	CMD_INTERNET(TypeConstants.CMD_INTERNET, R.string.cmd_internet),
 	CMD_BEAT(TypeConstants.CMD_BEAT, 0),
-	CMD_WIFISP(TypeConstants.CMD_WIFISP, R.string.cmd_wifisp);
+	CMD_WIFISP(TypeConstants.CMD_WIFISP, R.string.cmd_wifisp),
+	CMD_SSD(TypeConstants.CMD_SSD, R.string.cmd_dev);
 
 	private String command;
 	private int resID;

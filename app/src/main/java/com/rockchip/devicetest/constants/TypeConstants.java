@@ -34,6 +34,7 @@ public class TypeConstants {
 	public static final String CMD_INTERNET = "INTERNET";//联网（实际是激活）
 	public static final String CMD_WIFI2 = "WIFI2";//5G wifi
 	public static final String CMD_WIFISP = "WIFISP";//wifi 带宽
+	public static final String CMD_SSD = "SSD";//节点存在测试
 
 	//CommandType
 	public static final int TYPE_CMD = 0;

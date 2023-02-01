@@ -33,4 +33,6 @@ public class ParamConstants {
 	public static final String LAN_STOP ="lan_stop";
 	public static final String CMD_IPERF ="cmd_iperf";
 	public static final String SPEED_MIN ="band_min";
+	//dev
+	public static final String DEV_PATH ="path";
 }

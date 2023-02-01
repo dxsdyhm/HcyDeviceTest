@@ -36,7 +36,7 @@ public class LEDSettings {
      * 获得当前灯节点路径
      */
     public static String getSysLedFile(Context mContext){
-    	String SYS_LED_FILE = "/sys/class/leds/power-red/brightness";;
+    	String SYS_LED_FILE = "/sys/class/leds/power-red/brightness";
     	File factoryFile = ConfigFinder.findConfigFile(TestService.FILE_AGING_TEST,mContext);
         IniEditor mUserConfig = new IniEditor();
         if(factoryFile!=null&&factoryFile.exists()){
