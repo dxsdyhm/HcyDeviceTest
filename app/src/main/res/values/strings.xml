@@ -22,6 +22,7 @@
     <string name="cmd_wifi2">WIFI-5G</string>
     <string name="cmd_wifisp">WIFI带宽</string>
     <string name="cmd_dev">节点</string>
+    <string name="cmd_preinstall">预装</string>
 
     <!-- Main -->
     <string name="main_title">生产测试工具</string>

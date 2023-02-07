@@ -37,6 +37,7 @@ public enum Commands {
 	CMD_INTERNET(TypeConstants.CMD_INTERNET, R.string.cmd_internet),
 	CMD_BEAT(TypeConstants.CMD_BEAT, 0),
 	CMD_WIFISP(TypeConstants.CMD_WIFISP, R.string.cmd_wifisp),
+	CMD_INSTALL(TypeConstants.CMD_INSTALL, R.string.cmd_preinstall),
 	CMD_SSD(TypeConstants.CMD_SSD, R.string.cmd_dev);
 
 	private String command;

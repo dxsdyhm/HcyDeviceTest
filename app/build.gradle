@@ -3,14 +3,14 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
-    ndkVersion '21.3.6528147'
+    ndkVersion '21.4.7075529'
 
     defaultConfig {
         applicationId "com.rockchip.devicetest"
         minSdkVersion 25
         targetSdkVersion 29
         versionCode 8
-        versionName "7.3"
+        versionName "7.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

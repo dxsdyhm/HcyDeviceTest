@@ -35,6 +35,7 @@ public class TypeConstants {
 	public static final String CMD_WIFI2 = "WIFI2";//5G wifi
 	public static final String CMD_WIFISP = "WIFISP";//wifi 带宽
 	public static final String CMD_SSD = "SSD";//节点存在测试
+	public static final String CMD_INSTALL = "INSTALL";//预装软件
 
 	//CommandType
 	public static final int TYPE_CMD = 0;

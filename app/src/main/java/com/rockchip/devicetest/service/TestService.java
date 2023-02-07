@@ -13,6 +13,7 @@
 package com.rockchip.devicetest.service;
 
 
+import com.blankj.utilcode.util.SPUtils;
 import com.rockchip.devicetest.AgingTestActivity;
 import com.rockchip.devicetest.ApkInstallActivity;
 import com.rockchip.devicetest.ConfigFinder;
@@ -57,6 +58,7 @@ public class TestService extends Service {
 	private StorageManager mStorageManager = null;
 	private boolean mFirstMount;
 	private String uPath="";
+	public static final String SP_KEY_ROOTPATH = "rootpath";
 	
 	//TODO FileObserve
 	
@@ -166,6 +168,7 @@ public class TestService extends Service {
 		//检测功能测试
 		if(isInFactoryTest()){
 			LogUtil.d(this, "Rock do factory test. ");
+			SPUtils.getInstance().put(SP_KEY_ROOTPATH,uPath);
 			startActivityWait(IndexActivity.class);
 		}else if(isInAgingTest()){//检测老化测试
 			startActivityWait(AgingTestActivity.class);

@@ -35,4 +35,7 @@ public class ParamConstants {
 	public static final String SPEED_MIN ="band_min";
 	//dev
 	public static final String DEV_PATH ="path";
+	//preinstall
+	public static final String APK_COUNTS ="app_counts";
+	public static final String APK_PATH ="apk_path";
 }
