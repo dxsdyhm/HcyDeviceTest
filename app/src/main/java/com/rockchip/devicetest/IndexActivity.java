@@ -381,6 +381,7 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 		TextView versionText = (TextView)findViewById(R.id.tv_version);
 		TextView ramText = (TextView)findViewById(R.id.tv_ram);
 		TextView flashText = (TextView)findViewById(R.id.tv_flash);
+		TextView versionInfo = findViewById(R.id.version_info);
 		String devName=SystemProperties.get("ro.product.model","unknown");
 		modelText.setText(Build.PRODUCT+"/"+devName);
 		String version=Build.DISPLAY+"\n"+SystemInfoUtils.getVersion();
@@ -390,6 +391,8 @@ public class IndexActivity extends BaseActivity implements ListViewLoadListener 
 		ramText.setText(SystemInfoUtils.getFormattedRamSpace(this));
 		//flash
 		flashText.setText(SystemInfoUtils.getFormattedFlashSpace(this));
+
+		versionInfo.setText(SystemProperties.get("ro.product.version","0"));
 		/*
 		String flashPath = Environment.getExternalStorageDirectory().getAbsolutePath();
 		String status = mStorageManager.getVolumeState(flashPath);

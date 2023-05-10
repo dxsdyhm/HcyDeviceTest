@@ -163,6 +163,7 @@
 		tools:context=".IndexActivity">
 
 		<TextView
+			android:id="@+id/version_info"
 			android:layout_width="0dip"
 			android:layout_height="match_parent"
 			android:layout_weight="0.12"

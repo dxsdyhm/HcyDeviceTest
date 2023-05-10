@@ -110,12 +110,18 @@ public class RegistTest extends BaseTestCase {
 
     private void init() {
         sendInfo = new SendInfo();
-        sendInfo.setWifiMacAddr(SystemInfoUtils.getWifiMac(mContext));
+        String wifimac=SystemInfoUtils.getWifiMac(mContext);
+        sendInfo.setWifiMacAddr(wifimac);
         sendInfo.setMacAddr(SystemInfoUtils.getMac(mContext));
         sendInfo.setBluetoothAddr(IndexActivity.BlueMac);
         sendInfo.setFingerprint(SystemProperties.get("ro.build.fingerprint", ""));
         sendInfo.setModel(SystemProperties.get("ro.product.model", ""));
-        sendInfo.setCpuserial(SystemInfoUtils.getCpuSerial());
+        String cpu=SystemInfoUtils.getCpuSerial();
+        if(TextUtils.isEmpty(cpu)){
+            sendInfo.setCpuserial(wifimac);
+        }else {
+            sendInfo.setCpuserial(cpu);
+        }
         String licencecode = null;
         try {
             List<String> licencecodes = FileIOUtils.readFile2List(ConfigFinder.findConfigFile(TestService.FILE_LICENCE, mContext));

@@ -12,11 +12,20 @@
 *******************************************************************/   
 package com.rockchip.devicetest;
 
+import static com.rockchip.devicetest.service.TestService.FILE_FACTORY_TEST;
+
+import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.ServiceUtils;
 import com.rockchip.devicetest.service.TestService;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageParser;
+import android.os.SystemProperties;
+import android.os.UserHandle;
+import android.provider.Settings;
+import android.util.Log;
 
 public class BootReceiver extends BroadcastReceiver {
 
@@ -39,11 +48,18 @@ public class BootReceiver extends BroadcastReceiver {
 				}
 			}
 			mContext.startService(newIntent);
+			if(SystemProperties.getInt("persist.sys.skipservice",0)!=0&&isInFactoryTest(context)){
+				newIntent.setClass(context,IndexActivity.class);
+				ActivityUtils.startActivity(newIntent);
+			}
 		}else if(Intent.ACTION_BOOT_COMPLETED.equals(action)){
 			Intent newIntent = new Intent(mContext, TestService.class);
 			newIntent.putExtra(TestService.EXTRA_KEY_TESTFROM, "boot");
 			mContext.startService(newIntent);
 		}
 	}
-	
+
+	private boolean isInFactoryTest(Context context) {
+		return ConfigFinder.hasConfigFile(FILE_FACTORY_TEST, context);
+	}
 }

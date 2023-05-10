@@ -9,8 +9,8 @@ android {
         applicationId "com.rockchip.devicetest"
         minSdkVersion 25
         targetSdkVersion 29
-        versionCode 8
-        versionName "7.4"
+        versionCode 12
+        versionName "7.8"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
